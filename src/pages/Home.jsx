@@ -70,16 +70,20 @@ const Home = () => {
           <div className="watermark-container">
             <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer">
               <img 
-                src={`https://github-readme-stats.vercel.app/api?username=${personalInfo.github}&show_icons=true&theme=radical&bg_color=0D1117&text_color=c5c6c7&icon_color=45f3ff&title_color=ff2a6d&hide_border=true`} 
-                alt="GitHub Stats" 
-                height="130"
+                src={`https://img.shields.io/github/followers/${personalInfo.github}?style=for-the-badge&logo=github&color=0D1117&labelColor=ff2a6d&logoColor=45f3ff`} 
+                alt="GitHub Followers" 
               />
             </a>
-            <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://github.com/${personalInfo.github}/BeanSamuel.github.io`} target="_blank" rel="noopener noreferrer">
               <img 
-                src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${personalInfo.github}&layout=compact&theme=radical&bg_color=0D1117&text_color=c5c6c7&title_color=ff2a6d&hide_border=true`} 
-                alt="Top Languages" 
-                height="130"
+                src={`https://img.shields.io/github/stars/${personalInfo.github}/BeanSamuel.github.io?style=for-the-badge&logo=github&color=0D1117&labelColor=ff2a6d&logoColor=45f3ff`} 
+                alt="GitHub Stars" 
+              />
+            </a>
+            <a href={`https://github.com/${personalInfo.github}/BeanSamuel.github.io`} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={`https://img.shields.io/github/languages/top/${personalInfo.github}/BeanSamuel.github.io?style=for-the-badge&logo=github&color=0D1117&labelColor=ff2a6d&logoColor=45f3ff`} 
+                alt="Top Language" 
               />
             </a>
           </div>
