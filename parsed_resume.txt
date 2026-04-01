@@ -1,0 +1,148 @@
+
+--- 簡歷.pdf ---
+ 
+趙啟翔 
+(+886) 967101282         samuelchao921221@gmail.com         BeanSamuel         https://beansamuel.github.io 
+ 
+EDUCATION 
+國立中央大學 資訊工程學系          September 2022 – Ongoing 
+GPA: 4.09/4.3, 系所累計排名: 35/113, 1132 書卷獎, CPE 6/7 題 
+ 
+EXPERIENCE 
+中央研究院資訊科技創新研究中心實習生        July 2025 – Ongoing 
+• 專注於研究大型語言模型（LLM）潛在空間之間的關係 
+• 目前研究跨模態模型中測量語意理解的方法 
+EDU-TAIDE 後端與測試開發人員        July 2024 – July 2025 
+• 主導 EDU-TAIDE UI 平台的整體系統架構設計 
+• 協調前端、後端與模型推論層的設計與整合 
+ 
+PUBLICATION 
+• Chao, C.-H., Chang, H.-F., & Teng, P.-Y. (2025, June 10). Ensemble-Based Multi-Specialty Retrieval: 
+Integrating Diverse Similarity Metrics for Enhanced Question Answering. In Proceedings of the NTCIR-
+18 Conference on Evaluation of Information Access Technologies: AI CUP Special Session (p. 8), 
+Tokyo, Japan. National Institute of Informatics. 
+https://research.nii.ac.jp/ntcir/workshop/OnlineProceedings18/AI_CUP/02-AICUP-AICUP-ChaoC.pdf 
+• Chao, C. H., Hou, X. J., & Chiu, Y. C. (2021, October). Improve chit-chat and QA sentence 
+classification in user messages of dialogue system using dialogue act embedding. In L.-H. Lee, C.-H. 
+Chang, & K.-Y. Chen (Eds.), Proceedings of the 33rd Conference on Computational Linguistics and 
+Speech Processing (ROCLING 2021) (pp. 138–143). Taoyuan, Taiwan: The Association for 
+Computational Linguistics and Chinese Language Processing (ACLCLP). 
+https://aclanthology.org/2021.rocling-1.19/  
+• Chao, C.-H., Hou, X.-J., & Chiu, Y.-C. (2021). Improve Chit-chat and QA Sentence Classification in 
+User Messages of Dialogue System using Dialogue Act. Proceedings of the Taiwan Association for 
+Artificial Intelligence (TAAI 2021), Domestic Track. 
+• Chao, C.-H., Lin, J. C., & Wang, Y.-C. (2025, June). BoostTrack-enabled YOLOv5-nano edge vision 
+for enhanced situational awareness in fire scenarios within smart living environments for human and 
+animal safety. Manuscript presented at the Artificial Intelligence and Smart Technology Applications 
+Symposium (AISTA 2025), Taipei, Taiwan. 
+• Chao, C.-H., Zezario, R. E., & Tsao, Y. (2025). Do latent space similarities reflect semantic 
+relatedness? Unpublished manuscript. Department of Computer Science and Information Engineering, 
+National Central University, Taoyuan, Taiwan; Research Center for Information Technology Innovation, 
+Academia Sinica, Taipei, Taiwan. 
+  
+AWARDS 
+• The 2025 ICPC Asia Taichung Regional Programming Contest 銅牌       2025 
+• The 2025 ICPC Asia Taiwan Online Programming Contest 銀牌       2025 
+• 中央大學資訊工程學系 1132 書卷獎           2025 
+• 𝟷𝟷𝟹學年度資電院大學部專題競賽 佳作           2025 
+• 中央資工 113 學年度資工系大學部專題實驗競賽 佳作&人氣獎       2025 
+• AICUP2024 玉山人工智慧挑戰賽－RAG 與 LLM 在金融問答的應用 TOP 4.7%(共 487 隊)    2024 
+• 未來網路應用創意競賽 銅牌            2024 
+• 全國大專電腦軟體設計競賽 佳作            2023 
+• VEX 機器人競賽 全國技能挑戰賽第 9 名           2020 
+ 
+PROJECTS 
+基於多專業嵌入模型之裁判書檢索方法      Natural Language Processing 
+CARDS: Catching AI Revealing Deceptive Strategies    Natural Language Processing 
+Pretrained FIN-LLAMA3        Natural Language Processing 
+Smart Market Information Analysis Assistant     Natural Language Processing 
+HeyBot: Natural Language Extension for LineBot    Natural Language Processing 
+ARF! ARF! Who’s My Owner           Robot Vision 
+Enhancing Voice Authenticity in S2ST System            Speech Processing 
+ 
+COURSES 
+資料結構                   100 
+演算法                     93 
+程式語言                   100 
+資料科學導論                    98 
+資料蒐集與報告寫作                   93 
+數據分析智慧                    99 
+自然語言處理                    98 
+圖形識別實務與應用                 100 
+ 
+--- 自傳.pdf ---
+自傳 
+我是趙啟翔，出生於台北，目前就讀國立中央大學資訊工程學系。父親是 IC 設
+計的專案經理，母親則為心理師。我認真踏實，勇於迎接挑戰，並以堅持與企圖
+心推動自己持續成長，追求卓越。在求學過程中，我對學術研究以及競賽特別熱
+衷，以下針對這兩點進行說明。 
+ 
+一、 學術研究 
+高中時期 ， 我在蔡宗翰教授的指導下首次接觸學術研究 。 每週固定的論文報告與
+進度分享 ， 使我逐漸培養出獨立思考與由上而下 （top-down） 的分析能力 分析題
+目的能力 。雖然過程中遭遇數據與假設不符的情況 ， 但我在不斷調整策略的過程
+中 ， 培養了面對困難的耐心與韌性。這段經驗讓我在高中便有機會發表研究成果 ，
+包括 ROCLING 2021 [1] 與 TAAI 2021[2] 利用對話行為嵌入提升對話系統中  
+chit-chat 與 QA 訊息分類的研究， 為我日後投入自然語言處理奠定了紮實基礎 。 
+進入中央大學資工系後，我在大一、大二階段積極探索不同的資訊領域。除
+了課堂學習外，我常利用課餘時間自學新技術、參與線上課程並動手實作。在此
+期間，我因前輩的邀請加入 FIN-LLAMA3 計畫，負責Pre-trained 財務相關大語
+言模型資料處理 。 這段經驗不僅強化了我在資料前處理與系統化紀錄的習慣 ， 也
+培養了我團隊分工、跨領域協作與清楚溝通的能力。 
+自大三起，我將重心放在 RAG 與電腦視覺應用的研究。其中，在跨領域檢
+索的研究上，我與團隊合作的成果包括發表於 NTCIR-18 (Tokyo, 2025)[3]，提出
+一個整合多專業領域嵌入模型與多種相似度度量的集成檢索框架 ， 能在跨領域問
+答中顯著提升檢索與答案準確率 。同時，在王昱晟助理教授的指導下，我也於  
+AISTA 2025 (Taipei, 2025)[4] 發表了一篇針對火災場景的邊緣化電腦視覺模型與
+多目標追蹤研究論文，提出結合 YOLOv5-Nano 與 BoostTrack++ 的輕量化系統，
+能在火災中即時偵測與追蹤火焰 、 煙霧與人員 ， 以提升智慧居住環境的救援安全。
+這些國際會議的交流經驗 ， 讓我學會如何在有限時間內精準表達研究重點 ， 並吸
+收來自不同學者的觀點，進一步拓展視野並提升跨文化溝通與適應能力。此外，
+我也在中研院資訊科技創新研究中心實習 ， 在曹昱研究員與蔡宗翰教授的共同指
+導下，探索語意表示與語言模型的關聯性，並完成了一篇工作中論文[5]。 
+透過這些研究歷程 ， 我不僅累積了從題目設定 、 方法設計到成果發表的完整
+經驗，更培養了 耐挫力、批判性思考、跨領域整合與表達協調 等軟實力。這些
+特質讓我在未來的研究道路上，能以更開放與堅韌的心態面對挑戰。 
+ 二、 競賽參與 
+大學期間，我積極參與各類程式設計競賽。起初，我是因為解題帶來的挑戰感與
+成就感而投入競技程式，但隨著練習與比 TOPC、NCPC 的累積，我逐漸將競賽
+視為磨練思維與實作能力的方式 。 在團隊中 ，我通常擔任題目理解與演算法設計
+的角色，負責快速分析題意、判斷可能的演算法範式，並在比賽中與隊友協調分
+工。透過這樣的角色歷練，我培養了在有限時間內冷靜拆解問題、設計高效解法
+並轉化為可行程式的能力。 
+除了競程 ， 我也積極參與多場黑客松 。 在這類需要快速整合不同專業的比賽
+中，我多負責產品構思、擔任 PM，並進行 AI 與後端開發，確保技術能夠完美
+符合需求 。其中令我印象最深刻的一次是 2024 年的梅竹黑客松 ， 我將 AI Agent 
+的概念融入 LINE 平台 ， 嘗試解決其使用介面功能有限的問題 。 雖然最終未能獲
+獎 ， 但這段經歷讓我學會如何將技術轉化為可落地的解決方案 ， 也鍛鍊了我在高
+壓環境下保持清晰溝通與決策的能力。透過這樣的歷程，我更加體會到 「技術的
+價值，不僅在於解題，而是能回應真實世界的需求」 。 
+ 
+從研究經驗到競賽挑戰，我在大學階段不僅累積了專業能力，也培養了表達、合
+作與領導的素養。這些歷程讓我逐漸形成一個信念： 「研究需要深度，生活需要
+廣度」，而真正的成長來自於不斷學習與持續傳承。我期望藉由研究所的學習與
+訓練，在專業上更精進，也能在研究過程中與更多師長、同儕交流，汲取不同觀
+點，讓自己在學術與人生的道路上都能更踏實前行。 
+ 
+[1] Chao, C. H., Hou, X. J., & Chiu, Y . C. (2021, October). Improve chit-chat and QA sentence 
+classification in user messages of dialogue system using dialogue act embedding. In L. -H. Lee, C.-H. 
+Chang, & K.-Y . Chen (Eds.), Proceedings of the 33rd Conference on Computational Linguistics and 
+Speech Processing (ROCLING 2021) (pp. 138–143). Taoyuan, Taiwan: The Association for 
+Computational Linguistics and Chinese Language Processing (ACLCLP). 
+https://aclanthology.org/2021.rocling-1.19/  
+[2] Chao, C.-H., Hou, X.-J., & Chiu, Y .-C. (2021). Improve Chit-chat and QA Sentence Classification 
+in User Messages of Dialogue System using Dialogue Act. Proceedings of the Taiwan Association for 
+Artificial Intelligence (TAAI 2021), Domestic Track. 
+[3] Chao, C.-H., Chang, H.-F., & Teng, P.-Y . (2025, June 10). Ensemble-Based Multi-Specialty 
+Retrieval: Integrating Diverse Similarity Metrics for Enhanced Question Answering. In Proceedings of 
+the NTCIR-18 Conference on Evaluation of Information Access Technologies: AI CUP Special Session 
+(p. 8), Tokyo, Japan. National Institute of Informatics. 
+https://research.nii.ac.jp/ntcir/workshop/OnlineProceedings18/AI_CUP/02-AICUP-AICUP-ChaoC.pdf 
+[4] Chao, C.-H., Lin, J. C., & Wang, Y .-C. (2025, June). BoostTrack-enabled YOLOv5-nano edge 
+vision for enhanced situational awareness in fire scenarios within smart living environments for human 
+and animal safety. Manuscript presented at the Artificial Intelligence and Smart Technology 
+Applications Symposium (AISTA 2025), Taipei, Taiwan. 
+[5] Chao, C.-H., Zezario, R. E., & Tsao, Y . (2025). Do latent space similarities reflect semantic 
+relatedness? Unpublished manuscript. Department of Computer Science and Information Engineering, 
+National Central University, Taoyuan, Taiwan; Research Center for Information Technology 
+Innovation, Academia Sinica, Taipei, Taiwan. 

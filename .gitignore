@@ -1,77 +1,24 @@
-# ============================================================================
-# Hugo Site .gitignore
-# ============================================================================
-
-# ============================================================================
-# Hugo Build Artifacts
-# ============================================================================
-
-# Generated site output
-public/
-
-# Hugo resources (processed assets)
-resources/
-
-# Hugo build lock
-.hugo_build.lock
-
-# Hugo stats
-hugo_stats.json
-
-# Auto-generated JS config
-**/assets/jsconfig.json
-
-# ============================================================================
-# Node.js & Package Managers
-# ============================================================================
-
-# Dependencies
-node_modules/
-
-# ============================================================================
-# Environment & Configuration
-# ============================================================================
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# ============================================================================
-# Development Tools
-# ============================================================================
-
-# IDE & Editors
-.vscode/
-.idea/
-
-# ============================================================================
-# Generated Content
-# ============================================================================
-
-# Pagefind search index
-pagefind/
-static/pagefind/
-
-# ============================================================================
-# Operating System
-# ============================================================================
-
-# macOS
-.DS_Store
-.DS_Store?
-._*
-
-# Windows
-Thumbs.db
-Desktop.ini
-
-# Linux
-*~
-
-# ============================================================================
-# Logs & Temporary Files
-# ============================================================================
-
+# Logs
+logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
