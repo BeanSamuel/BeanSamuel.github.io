@@ -91,6 +91,24 @@ const Home = () => {
         </div>
       </div>
 
+      <SectionViewer title="GitHub Contributions">
+        <picture>
+          <source
+            media="(prefers-color-scheme: dark)"
+            srcSet="https://raw.githubusercontent.com/BeanSamuel/BeanSamuel.github.io/output/github-contribution-grid-snake-dark.svg"
+          />
+          <source
+            media="(prefers-color-scheme: light)"
+            srcSet="https://raw.githubusercontent.com/BeanSamuel/BeanSamuel.github.io/output/github-contribution-grid-snake.svg"
+          />
+          <img
+            alt="github contribution grid snake animation"
+            src="https://raw.githubusercontent.com/BeanSamuel/BeanSamuel.github.io/output/github-contribution-grid-snake.svg"
+            style={{ width: '100%' }}
+          />
+        </picture>
+      </SectionViewer>
+
       <SectionViewer title="Core Abilities">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
           {abilities.map((ability, idx) => (
