@@ -4,7 +4,7 @@ export const personalInfo = {
   github: "BeanSamuel",
   email: "samuelchao921221@gmail.com",
   website: "https://beansamuel.github.io",
-  role: "NLP & AI Researcher | Backend Developer | Robotics Vision",
+  role: "NLP Researcher | ICPC Competitor | Backend Developer",
 };
 
 export const education = [
@@ -12,100 +12,149 @@ export const education = [
     institution: "國立中央大學 (National Central University)",
     department: "資訊工程學系 (Computer Science and Information Engineering)",
     period: "Sept 2022 – Present",
-    details: "Focusing on Software Engineering, Artificial Intelligence, and Algorithms."
+    details: "GPA 4.09 / 4.3  ·  Dept. Rank 35 / 113  ·  CPE 6 / 7 Problems Solved  ·  1132 書卷獎"
   }
 ];
 
 export const experience = [
   {
-    title: "中央研究院資訊科技創新研究中心實習生",
+    title: "Research Intern — 資訊科技創新研究中心 (IIS)",
     company: "Academia Sinica",
     period: "July 2025 – Present",
     description: [
-      "專注於研究大型語言模型（LLM）潛在空間之間的關係",
-      "目前研究跨模態模型中測量語意理解的方法"
+      "Investigating cross-modal alignments of large pre-trained models for representation and semantic enhancement",
+      "Researching methods to measure semantic understanding across modalities in LLMs",
+      "Co-authoring paper: \"Do Latent Space Similarities Reflect Semantic Relatedness?\" (under submission)"
     ]
   },
   {
-    title: "EDU-TAIDE 後端與測試開發人員",
+    title: "Backend & QA Developer",
     company: "EDU-TAIDE",
     period: "July 2024 – July 2025",
     description: [
-      "主導 EDU-TAIDE UI 平台的整體系統架構設計",
-      "協調前端、後端與模型推論層的設計與整合"
+      "Led overall system architecture design for the EDU-TAIDE UI platform",
+      "Coordinated integration across frontend, backend, and model inference layers",
+      "Developed automated testing pipelines and backend APIs for the AI education service"
     ]
   }
 ];
 
 export const publications = [
   {
-    title: "Ensemble-Based Multi-Specialty Retrieval: Integrating Diverse Similarity Metrics for Enhanced Question Answering.",
+    title: "Ensemble-Based Multi-Specialty Retrieval: Integrating Diverse Similarity Metrics for Enhanced Question Answering",
     authors: "Chao, C.-H., Chang, H.-F., & Teng, P.-Y.",
     year: 2025,
     venue: "NTCIR-18 Conference on Evaluation of Information Access Technologies: AI CUP Special Session",
     link: "https://research.nii.ac.jp/ntcir/workshop/OnlineProceedings18/AI_CUP/02-AICUP-AICUP-ChaoC.pdf"
   },
   {
-    title: "BoostTrack-enabled YOLOv5-nano edge vision for enhanced situational awareness in fire scenarios within smart living environments for human and animal safety.",
-    authors: "Chao, C.-H., Lin, J. C., & Wang, Y.-C.",
-    year: 2025,
-    venue: "Artificial Intelligence and Smart Technology Applications Symposium (AISTA 2025)"
-  },
-  {
-    title: "Do latent space similarities reflect semantic relatedness?",
+    title: "Do Latent Space Similarities Reflect Semantic Relatedness? Cross-Modal Alignments of Large Pre-Trained Models",
     authors: "Chao, C.-H., Zezario, R. E., & Tsao, Y.",
     year: 2025,
-    venue: "Unpublished manuscript. NCU & Academia Sinica"
+    venue: "Under Submission — National Central University & Academia Sinica"
   },
   {
-    title: "Improve chit-chat and QA sentence classification in user messages of dialogue system using dialogue act embedding.",
-    authors: "Chao, C. H., Hou, X. J., & Chiu, Y. C.",
+    title: "BoostTrack-enabled YOLOv5-nano Edge Vision for Enhanced Situational Awareness in Fire Scenarios Within Smart Living Environments",
+    authors: "Chao, C.-H., Lin, J. C., & Wang, Y.-C.",
+    year: 2025,
+    venue: "IEEE Artificial Intelligence and Smart Technology Applications Symposium (AISTA 2025)"
+  },
+  {
+    title: "Improve Chit-chat and QA Sentence Classification in User Messages of Dialogue System Using Dialogue Act Embedding",
+    authors: "Chao, C.-H., Hou, X.-J., & Chiu, Y.-C.",
     year: 2021,
-    venue: "ROCLING 2021",
+    venue: "ROCLING 2021 — The 33rd Conference on Computational Linguistics and Speech Processing",
     link: "https://aclanthology.org/2021.rocling-1.19/"
   },
   {
-    title: "Improve Chit-chat and QA Sentence Classification in User Messages of Dialogue System using Dialogue Act.",
+    title: "Improve Chit-chat and QA Sentence Classification in User Messages of Dialogue System Using Dialogue Act",
     authors: "Chao, C.-H., Hou, X.-J., & Chiu, Y.-C.",
     year: 2021,
-    venue: "TAAI 2021, Domestic Track"
+    venue: "TAAI 2021 — Domestic Track"
   }
 ];
 
 export const awards = [
-  { title: "The 2025 ICPC Asia Taichung Regional Programming Contest 銅牌", year: "2025" },
-  { title: "The 2025 ICPC Asia Taiwan Online Programming Contest 銀牌", year: "2025" },
-  { title: "AICUP 2024 玉山人工智慧挑戰賽－RAG與LLM在金融問答的應用 TOP 4.7%(共 487 隊)", year: "2024" },
-  { title: "未來網路應用創意競賽 銅牌", year: "2024" },
+  { title: "ICPC Asia Taichung Regional Programming Contest — 銅牌 (Bronze Medal)", year: "2025" },
+  { title: "ICPC Asia Taiwan Online Programming Contest — 銀牌 (Silver Medal)", year: "2025" },
+  { title: "國立中央大學 1132 學期書卷獎 (Academic Excellence Award)", year: "2025" },
+  { title: "113學年度資電院大學部專題競賽 佳作", year: "2025" },
+  { title: "113學年度資工系大學部專題實驗競賽 佳作、人氣獎", year: "2025" },
+  { title: "AICUP 2024 玉山人工智慧挑戰賽 RAG × LLM 金融問答 — TOP 4.7% (487 teams)", year: "2024" },
+  { title: "未來網路應用創意競賽 銅牌 (Bronze Medal)", year: "2024" },
   { title: "全國大專電腦軟體設計競賽 佳作", year: "2023" },
-  { title: "VEX 機器人競賽 全國技能挑戰賽第 9 名", year: "2020" }
+  { title: "VEX 機器人競賽 全國技能挑戰賽 第 9 名", year: "2020" }
 ];
 
 export const projects = [
-  { name: "基於多專業嵌入模型之裁判書檢索方法", tag: "Natural Language Processing" },
-  { name: "CARDS: Catching AI Revealing Deceptive Strategies", tag: "Natural Language Processing" },
-  { name: "Pretrained FIN-LLAMA3", tag: "Natural Language Processing" },
-  { name: "Smart Market Information Analysis Assistant", tag: "Natural Language Processing" },
-  { name: "HeyBot: Natural Language Extension for LineBot", tag: "Natural Language Processing" },
-  { name: "ARF! ARF! Who’s My Owner", tag: "Robot Vision" },
-  { name: "Enhancing Voice Authenticity in S2ST System", tag: "Speech Processing" }
+  {
+    name: "基於多專業嵌入模型之裁判書檢索方法",
+    tag: "NLP / Information Retrieval",
+    description: "NTCIR-18 task: multi-specialty embedding ensemble for legal judgment document retrieval and multi-turn QA. Awarded 佳作 in NCU departmental competition."
+  },
+  {
+    name: "CARDS: Catching AI Revealing Deceptive Strategies",
+    tag: "NLP / Game AI",
+    description: "Competitive deception-detection board game powered by LLMs to identify AI-generated versus human text in real-time game scenarios."
+  },
+  {
+    name: "Pretrained FIN-LLAMA3",
+    tag: "NLP / Finance",
+    description: "Domain-adaptive fine-tuning of LLaMA 3 on financial corpora for RAG-based Q&A, sentiment analysis, and report summarization."
+  },
+  {
+    name: "Smart Market Information Analysis Assistant",
+    tag: "NLP / RAG",
+    description: "Intelligent market analysis assistant leveraging retrieval-augmented generation (RAG) and LLMs to surface actionable financial insights from live data."
+  },
+  {
+    name: "HeyBot: Natural Language Extension for LineBot",
+    tag: "NLP / Chatbot",
+    description: "LINE chatbot enhanced with intent classification and contextual NLP for natural, multi-turn conversations across diverse user queries."
+  },
+  {
+    name: "ARF! ARF! Who's My Owner",
+    tag: "Computer Vision / Robotics",
+    description: "Robot dog that identifies its owner via YOLOv5-based person recognition and BoostTrack multi-object tracking in real time."
+  },
+  {
+    name: "Enhancing Voice Authenticity in S2ST System",
+    tag: "Speech Processing",
+    description: "Improving speech-to-speech translation quality with speaker identity preservation and voice authenticity enhancement techniques."
+  }
 ];
 
-// Re-structured abilities/skills matrix
 export const abilities = [
   {
-    category: "AI & Machine Learning",
-    items: ["Natural Language Processing (NLP)", "Large Language Models (LLM)", "RAG Systems", "Computer Vision (YOLO)"],
-    color: "var(--accent-primary)" // Cyan
+    category: "AI & NLP Research",
+    items: [
+      "Large Language Models (LLM)",
+      "Retrieval-Augmented Generation (RAG)",
+      "Cross-Modal Representation Learning",
+      "Computer Vision (YOLOv5 / YOLO)",
+      "Speech Processing (S2ST)"
+    ],
+    color: "var(--accent-primary)"
   },
   {
-    category: "Backend & Systems",
-    items: ["Node.js", "Python", "API Architecture", "System Integration", "Testing Automation"],
-    color: "var(--accent-secondary)" // Pink/Magenta
+    category: "Software Development",
+    items: [
+      "Python / Node.js / C++",
+      "Backend API Architecture",
+      "System Integration & Testing",
+      "React / Vite (Frontend)",
+      "Git & CI/CD Workflows"
+    ],
+    color: "var(--accent-secondary)"
   },
   {
-    category: "Algorithms & Core",
-    items: ["Competitive Programming (ICPC Silver)", "Data Structures", "Algorithm Design", "Pattern Recognition"],
-    color: "var(--accent-tertiary)" // Blue glow
+    category: "Algorithms & Competitive",
+    items: [
+      "ICPC Competitor (Silver & Bronze Medals)",
+      "Data Structures & Algorithm Design",
+      "CPE: 6 / 7 Problems Solved",
+      "Dynamic Programming & Graph Theory"
+    ],
+    color: "var(--accent-tertiary)"
   }
 ];

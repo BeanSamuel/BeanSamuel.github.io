@@ -90,3 +90,41 @@ export const GeneralList = ({ title, data }) => (
     </ul>
   </div>
 );
+
+export const ProjectList = ({ data }) => (
+  <div>
+    {data.map((item, idx) => (
+      <div
+        key={idx}
+        style={{
+          marginBottom: '1.5rem',
+          background: 'rgba(255,255,255,0.03)',
+          padding: '1.5rem',
+          borderRadius: '4px',
+          border: '1px solid var(--border-color)',
+          transition: 'border-color 0.3s ease'
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent-primary)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <h4 style={{ color: '#fff', fontSize: '1.05rem', margin: 0 }}>{item.name}</h4>
+          <span style={{
+            color: 'var(--accent-primary)',
+            fontSize: '0.8rem',
+            fontFamily: 'var(--font-mono)',
+            background: 'rgba(69, 243, 255, 0.1)',
+            padding: '0.2rem 0.6rem',
+            borderRadius: '3px',
+            whiteSpace: 'nowrap'
+          }}>{item.tag}</span>
+        </div>
+        {item.description && (
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginTop: '0.8rem', marginBottom: 0 }}>
+            {item.description}
+          </p>
+        )}
+      </div>
+    ))}
+  </div>
+);
