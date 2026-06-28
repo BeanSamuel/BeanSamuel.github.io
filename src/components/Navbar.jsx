@@ -7,6 +7,7 @@ const Navbar = () => {
     { path: '/experience', label: '~/experience' },
     { path: '/projects', label: '~/projects' },
     { path: '/publications', label: '~/publications' },
+    { path: '/snake', label: '~/snake.exe' },
   ];
 
   return (

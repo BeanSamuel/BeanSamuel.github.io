@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Experience from './pages/Experience';
 import Projects from './pages/Projects';
 import Publications from './pages/Publications';
+import SnakeGame from './pages/SnakeGame';
 import { personalInfo } from './data/resumeData';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/publications" element={<Publications />} />
+          <Route path="/snake" element={<SnakeGame />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
