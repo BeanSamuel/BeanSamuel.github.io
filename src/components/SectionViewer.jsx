@@ -9,7 +9,7 @@ const SectionViewer = ({ title, children }) => {
           <div className="control minimize"></div>
           <div className="control maximize"></div>
         </div>
-        <div className="window-title">~/portfolio/{title.toLowerCase().replace(' ', '_')}</div>
+        <div className="window-title">~/portfolio/{title.toLowerCase().replace(/\s+/g, '_')}</div>
       </div>
       <div className="terminal-body" style={{ padding: '2rem' }}>
         <h2><span style={{ color: 'var(--accent-secondary)' }}>#</span> {title}</h2>

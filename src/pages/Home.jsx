@@ -8,14 +8,12 @@ import { FaGithub, FaGlobe } from 'react-icons/fa';
 const Home = () => {
   return (
     <div>
-      <HeroTerminal />
-      
       <div style={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         gap: '2.5rem',
-        marginBottom: '3rem',
+        margin: '1rem 0 3rem 0',
         flexWrap: 'wrap'
       }}>
         <div style={{
@@ -90,6 +88,8 @@ const Home = () => {
 
         </div>
       </div>
+
+      <HeroTerminal />
 
       <SectionViewer title="GitHub Contributions">
         <picture>

@@ -1,21 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaBriefcase, FaCode, FaScroll, FaDragon, FaCrosshairs, FaTerminal } from 'react-icons/fa';
+import { FaHome, FaBriefcase, FaCode, FaScroll, FaTerminal, FaGamepad } from 'react-icons/fa';
 
-const mainTabs = [
-  { path: '/',             label: 'Home',         icon: <FaHome /> },
-  { path: '/experience',   label: 'Experience',   icon: <FaBriefcase /> },
-  { path: '/projects',     label: 'Projects',     icon: <FaCode /> },
-  { path: '/publications', label: 'Publications', icon: <FaScroll /> },
-  { path: '/competitive',  label: 'CP',           icon: <FaTerminal /> },
+const tabs = [
+  { path: '/',            label: 'Home',        icon: <FaHome /> },
+  { path: '/experience',  label: 'Experience',  icon: <FaBriefcase /> },
+  { path: '/projects',    label: 'Projects',    icon: <FaCode /> },
+  { path: '/research',    label: 'Research',    icon: <FaScroll /> },
+  { path: '/competitive', label: 'Competitive', icon: <FaTerminal /> },
+  // Tinted differently so the games read as a detour from the portfolio
+  // proper — the old divider and "GAMES" label did the same job noisily.
+  { path: '/playground',  label: 'Playground',  icon: <FaGamepad />, accent: 'var(--accent-secondary)' },
 ];
 
-const gameTabs = [
-  { path: '/snake', label: 'Snake.exe',  icon: <FaDragon /> },
-  { path: '/fps',   label: 'Cyber FPS',  icon: <FaCrosshairs /> },
-];
-
-const tabStyle = (isActive) => ({
+const tabStyle = (isActive, accent = 'var(--accent-primary)') => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: '0.45rem',
@@ -23,9 +21,9 @@ const tabStyle = (isActive) => ({
   fontFamily: 'var(--font-mono)',
   fontSize: '0.88rem',
   textDecoration: 'none',
-  color: isActive ? '#000' : 'var(--text-main)',
-  background: isActive ? 'var(--accent-primary)' : 'transparent',
-  border: `1px solid ${isActive ? 'transparent' : 'var(--border-color)'}`,
+  color: isActive ? '#000' : accent === 'var(--accent-primary)' ? 'var(--text-main)' : accent,
+  background: isActive ? accent : 'transparent',
+  border: `1px solid ${isActive ? 'transparent' : accent === 'var(--accent-primary)' ? 'var(--border-color)' : 'rgba(255,42,109,0.3)'}`,
   borderRadius: '4px',
   transition: 'all 0.25s ease',
   whiteSpace: 'nowrap',
@@ -43,39 +41,13 @@ const Navbar = () => (
     flexWrap: 'wrap',
     backdropFilter: 'blur(6px)',
   }}>
-    {/* Main navigation */}
-    {mainTabs.map((tab) => (
-      <NavLink key={tab.path} to={tab.path} end={tab.path === '/'}
-        style={({ isActive }) => tabStyle(isActive)}>
-        {tab.icon} {tab.label}
-      </NavLink>
-    ))}
-
-    {/* Divider */}
-    <span style={{
-      width: '1px',
-      height: '28px',
-      background: 'var(--border-color)',
-      margin: '0 0.3rem',
-      flexShrink: 0,
-    }} />
-    <span style={{
-      fontFamily: 'var(--font-mono)',
-      fontSize: '0.7rem',
-      color: 'var(--text-dim)',
-      letterSpacing: '1px',
-      textTransform: 'uppercase',
-    }}>Games</span>
-
-    {/* Game tabs */}
-    {gameTabs.map((tab) => (
-      <NavLink key={tab.path} to={tab.path}
-        style={({ isActive }) => ({
-          ...tabStyle(isActive),
-          color: isActive ? '#000' : 'var(--accent-secondary)',
-          border: `1px solid ${isActive ? 'transparent' : 'rgba(255,42,109,0.3)'}`,
-          background: isActive ? 'var(--accent-secondary)' : 'transparent',
-        })}>
+    {tabs.map((tab) => (
+      <NavLink
+        key={tab.path}
+        to={tab.path}
+        end={tab.path === '/'}
+        style={({ isActive }) => tabStyle(isActive, tab.accent)}
+      >
         {tab.icon} {tab.label}
       </NavLink>
     ))}

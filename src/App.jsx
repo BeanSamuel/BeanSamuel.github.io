@@ -4,10 +4,9 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Experience from './pages/Experience';
 import Projects from './pages/Projects';
-import Publications from './pages/Publications';
+import Research from './pages/Research';
 import Competitive from './pages/Competitive';
-import SnakeGame from './pages/SnakeGame';
-import FPSGame from './pages/FPSGame';
+import Playground from './pages/Playground';
 import { personalInfo } from './data/resumeData';
 
 function App() {
@@ -24,10 +23,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/publications" element={<Publications />} />
+          <Route path="/research" element={<Research />} />
           <Route path="/competitive" element={<Competitive />} />
-          <Route path="/snake" element={<SnakeGame />} />
-          <Route path="/fps" element={<FPSGame />} />
+          <Route path="/playground" element={<Playground />} />
+          <Route path="/playground/:game" element={<Playground />} />
+
+          {/* Old URLs, kept so existing links and bookmarks still land. */}
+          <Route path="/publications" element={<Navigate to="/research" replace />} />
+          <Route path="/snake" element={<Navigate to="/playground/snake" replace />} />
+          <Route path="/fps" element={<Navigate to="/playground/fps" replace />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 

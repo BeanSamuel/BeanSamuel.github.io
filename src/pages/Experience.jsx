@@ -1,7 +1,7 @@
 import React from 'react';
 import SectionViewer from '../components/SectionViewer';
-import { ExperienceList, EducationList } from '../components/Lists';
-import { experience, education } from '../data/resumeData';
+import { ExperienceList, EducationList, GeneralList } from '../components/Lists';
+import { experience, education, awards } from '../data/resumeData';
 
 const Experience = () => {
   return (
@@ -12,6 +12,10 @@ const Experience = () => {
 
       <SectionViewer title="Education">
         <EducationList data={education} />
+      </SectionViewer>
+
+      <SectionViewer title="Honors & Awards">
+        <GeneralList data={awards} />
       </SectionViewer>
     </div>
   );
