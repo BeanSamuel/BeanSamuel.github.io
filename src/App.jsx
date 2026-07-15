@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Experience from './pages/Experience';
 import Projects from './pages/Projects';
 import Publications from './pages/Publications';
+import Competitive from './pages/Competitive';
 import SnakeGame from './pages/SnakeGame';
 import FPSGame from './pages/FPSGame';
 import { personalInfo } from './data/resumeData';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/publications" element={<Publications />} />
+          <Route path="/competitive" element={<Competitive />} />
           <Route path="/snake" element={<SnakeGame />} />
           <Route path="/fps" element={<FPSGame />} />
           <Route path="*" element={<Navigate to="/" replace />} />

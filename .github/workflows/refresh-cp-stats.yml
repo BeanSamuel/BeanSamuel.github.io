@@ -1,0 +1,75 @@
+name: Refresh CP stats snapshot
+
+# The /competitive page fetches stats.json from the cpp_practice repo at
+# runtime, so visitors already see current numbers. This job refreshes the
+# snapshot bundled into the build — the copy that paints first and covers a
+# failed fetch — so it never drifts far behind.
+#
+# It builds and deploys inline rather than leaving that to deploy.yml: a push
+# made with GITHUB_TOKEN deliberately does not trigger other workflows, so
+# committing alone would never reach the live site.
+on:
+  schedule:
+    - cron: "0 4 * * *"   # daily, 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch latest stats.json
+        run: |
+          curl -fsSL \
+            https://raw.githubusercontent.com/BeanSamuel/cpp_practice/main/stats.json \
+            -o /tmp/stats.json
+          # Refuse to commit a truncated or reshaped file.
+          python3 -c "import json,sys; d=json.load(open('/tmp/stats.json')); sys.exit(0 if d['totals']['problems'] > 0 else 1)"
+          mv /tmp/stats.json src/data/cpStatsSnapshot.json
+
+      - name: Commit if snapshot changed
+        id: commit
+        run: |
+          if git diff --quiet -- src/data/cpStatsSnapshot.json; then
+            echo "Snapshot unchanged — nothing to do."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/cpStatsSnapshot.json
+          git commit -m "chore: refresh CP stats snapshot"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        if: steps.commit.outputs.changed == 'true'
+        run: npm ci
+
+      - name: Build Application
+        if: steps.commit.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true

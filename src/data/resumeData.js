@@ -86,6 +86,37 @@ export const awards = [
   { title: "VEX 機器人競賽 全國技能挑戰賽 第 9 名", year: "2020" }
 ];
 
+// Contest results shown on the Competitive Programming page, alongside the
+// live practice stats pulled from the cpp_practice repo.
+export const competitiveHighlights = [
+  {
+    title: "ICPC Asia Taiwan Online Programming Contest",
+    result: "銀牌 Silver Medal",
+    year: "2025",
+    color: "var(--accent-primary)"
+  },
+  {
+    title: "ICPC Asia Taichung Regional Programming Contest",
+    result: "銅牌 Bronze Medal",
+    year: "2025",
+    color: "var(--accent-secondary)"
+  },
+  {
+    title: "CPE 大學程式能力檢定",
+    result: "6 / 7 Problems Solved",
+    year: "2024",
+    color: "var(--accent-tertiary)"
+  },
+  {
+    title: "全國大專電腦軟體設計競賽",
+    result: "佳作 Honorable Mention",
+    year: "2023",
+    color: "var(--accent-primary)"
+  }
+];
+
+export const cppPracticeRepo = "BeanSamuel/cpp_practice";
+
 export const projects = [
   {
     name: "基於多專業嵌入模型之裁判書檢索方法",

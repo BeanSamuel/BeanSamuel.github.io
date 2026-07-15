@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaBriefcase, FaCode, FaScroll, FaDragon, FaCrosshairs } from 'react-icons/fa';
+import { FaHome, FaBriefcase, FaCode, FaScroll, FaDragon, FaCrosshairs, FaTerminal } from 'react-icons/fa';
 
 const mainTabs = [
   { path: '/',             label: 'Home',         icon: <FaHome /> },
   { path: '/experience',   label: 'Experience',   icon: <FaBriefcase /> },
   { path: '/projects',     label: 'Projects',     icon: <FaCode /> },
   { path: '/publications', label: 'Publications', icon: <FaScroll /> },
+  { path: '/competitive',  label: 'CP',           icon: <FaTerminal /> },
 ];
 
 const gameTabs = [
