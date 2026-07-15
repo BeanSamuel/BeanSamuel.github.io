@@ -1,9 +1,8 @@
-import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { personalInfo, abilities } from '../data/resumeData';
 import SectionViewer from '../components/SectionViewer';
 import HeroTerminal from '../components/HeroTerminal';
-import { FaGithub, FaGlobe } from 'react-icons/fa';
+import { FaGithub, FaEnvelope } from 'react-icons/fa';
 
 const Home = () => {
   return (
@@ -25,11 +24,10 @@ const Home = () => {
           boxShadow: '0 0 20px var(--accent-primary)',
           flexShrink: 0
         }}>
-          <img 
-            src="/avatar.png" 
-            alt="Samuel's Avatar" 
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-            onError={(e) => { e.target.src = 'https://via.placeholder.com/180?text=Avatar' }}
+          <img
+            src="/avatar.png"
+            alt={`${personalInfo.name} avatar`}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
         
@@ -57,11 +55,11 @@ const Home = () => {
           </div>
           
           <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-             <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="cyber-btn">
-               <FaGlobe /> Website
-             </a>
              <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer" className="cyber-btn">
                <FaGithub /> GitHub
+             </a>
+             <a href={`mailto:${personalInfo.email}`} className="cyber-btn">
+               <FaEnvelope /> Email
              </a>
           </div>
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { FaDragon, FaCrosshairs } from 'react-icons/fa';
 import SnakeGame from './SnakeGame';

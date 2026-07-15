@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import SectionViewer from '../components/SectionViewer';
 
 // 0=empty, 1=cyan wall, 2=red wall, 3=yellow wall

@@ -1,4 +1,3 @@
-import React from 'react';
 import SectionViewer from '../components/SectionViewer';
 import { ExperienceList, EducationList, GeneralList } from '../components/Lists';
 import { experience, education, awards } from '../data/resumeData';

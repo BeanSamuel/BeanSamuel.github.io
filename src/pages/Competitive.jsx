@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaGithub, FaTrophy, FaBolt, FaSyncAlt } from 'react-icons/fa';
 import SectionViewer from '../components/SectionViewer';
 import CpHeatmap from '../components/CpHeatmap';

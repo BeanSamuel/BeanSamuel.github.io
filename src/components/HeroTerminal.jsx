@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { personalInfo } from '../data/resumeData';
 
 const HeroTerminal = () => {
   const [textIndex, setTextIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
 
   const lines = [
     `> System initializing...`,

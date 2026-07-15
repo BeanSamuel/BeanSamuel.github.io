@@ -1,4 +1,3 @@
-import React from 'react';
 import SectionViewer from '../components/SectionViewer';
 import { ProjectList, WritingList } from '../components/Lists';
 import { projects, writings } from '../data/resumeData';

@@ -29,6 +29,11 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      // This is a small personal site with no runtime type checking; every
+      // component is called from one place in this repo. Declaring propTypes
+      // for each would be ceremony, so the rule is off rather than ignored
+      // file by file.
+      'react/prop-types': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

@@ -1,4 +1,3 @@
-import React from 'react';
 
 const listItemStyle = {
   marginBottom: '2rem',
@@ -26,7 +25,7 @@ export const ExperienceList = ({ data }) => (
         <div style={dotStyle}></div>
         <h3 style={{ color: 'var(--accent-tertiary)', marginBottom: '0.3rem' }}>{item.title}</h3>
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', color: 'var(--text-dim)', marginBottom: '1rem' }}>
-          {item.company} // {item.period}
+          {item.company} {'//'} {item.period}
         </p>
         <ul style={{ paddingLeft: '1.5rem', color: 'var(--text-main)' }}>
           {item.description.map((desc, dIdx) => (
@@ -74,7 +73,7 @@ export const PublicationList = ({ data }) => (
   </div>
 );
 
-export const GeneralList = ({ title, data }) => (
+export const GeneralList = ({ data }) => (
   <div>
     <ul style={{ listStyleType: 'square', paddingLeft: '1.5rem' }}>
       {data.map((item, idx) => (
@@ -111,7 +110,7 @@ export const WritingList = ({ data }) => (
           <div>
             <h4 style={{ color: '#fff', fontSize: '1.15rem', margin: 0 }}>{item.title}</h4>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.25rem' }}>
-              {item.subtitle} // {item.platform}
+              {item.subtitle} {'//'} {item.platform}
             </p>
           </div>
           {item.views && (
