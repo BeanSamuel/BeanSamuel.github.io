@@ -155,6 +155,25 @@ export const projects = [
   }
 ];
 
+// Public writing. `views` is maintained by hand — HackMD exposes no public
+// stats API — so treat it as a rounded floor rather than a live number.
+export const writings = [
+  {
+    title: "經典邏輯題",
+    subtitle: "Classic Logic Puzzles",
+    platform: "HackMD",
+    url: "https://hackmd.io/@BeanSamuel/S1-vxjfXp",
+    views: "10,000+",
+    description:
+      "12 道經典邏輯謎題的完整拆解，從海盜分金幣、囚犯帽子到生死抉擇。每題先給題目，答案收在 spoiler 裡，讀者可以先想過再展開推理過程。",
+    topics: [
+      "海盜分金幣", "繩子燃燒問題", "賽馬名次", "驗證牌背",
+      "帽子問題", "乒乓球問題", "時鐘切割", "生日日期",
+      "木塊並排", "數列排列問題", "分金條", "生死抉擇"
+    ]
+  }
+];
+
 export const abilities = [
   {
     category: "AI & NLP Research",

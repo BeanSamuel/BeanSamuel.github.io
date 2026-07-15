@@ -91,6 +91,83 @@ export const GeneralList = ({ title, data }) => (
   </div>
 );
 
+export const WritingList = ({ data }) => (
+  <div>
+    {data.map((item, idx) => (
+      <div
+        key={idx}
+        style={{
+          marginBottom: '1.5rem',
+          background: 'rgba(255,255,255,0.03)',
+          padding: '1.5rem',
+          borderRadius: '4px',
+          border: '1px solid var(--border-color)',
+          transition: 'border-color 0.3s ease'
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent-primary)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+          <div>
+            <h4 style={{ color: '#fff', fontSize: '1.15rem', margin: 0 }}>{item.title}</h4>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.25rem' }}>
+              {item.subtitle} // {item.platform}
+            </p>
+          </div>
+          {item.views && (
+            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-primary)', lineHeight: 1.1 }}>
+                {item.views}
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-dim)' }}>
+                readers
+              </div>
+            </div>
+          )}
+        </div>
+
+        {item.description && (
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginTop: '1rem' }}>
+            {item.description}
+          </p>
+        )}
+
+        {item.topics && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '1rem' }}>
+            {item.topics.map((topic, tIdx) => (
+              <span
+                key={tIdx}
+                style={{
+                  color: 'var(--accent-tertiary)',
+                  fontSize: '0.75rem',
+                  fontFamily: 'var(--font-mono)',
+                  background: 'rgba(5, 217, 232, 0.08)',
+                  border: '1px solid rgba(5, 217, 232, 0.2)',
+                  padding: '0.15rem 0.55rem',
+                  borderRadius: '3px',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {topic}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cyber-btn"
+          style={{ display: 'inline-flex', marginTop: '1.5rem', fontSize: '0.85rem' }}
+        >
+          [ Read on {item.platform} ]
+        </a>
+      </div>
+    ))}
+  </div>
+);
+
 export const ProjectList = ({ data }) => (
   <div>
     {data.map((item, idx) => (
