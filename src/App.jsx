@@ -11,7 +11,6 @@ import { personalInfo } from './data/resumeData';
 function App() {
   return (
     <HashRouter>
-      <div className="bg-grid"></div>
       <div className="container">
         
         {/* Navigation Tabs */}
@@ -36,13 +35,23 @@ function App() {
         </Routes>
 
         {/* Footer */}
-        <div style={{ textAlign: 'center', margin: '4rem 0 2rem 0', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', fontSize: '0.85rem' }}>
-          <p>
-            System <span style={{color: 'var(--accent-secondary)'}}>Offline</span>. 
-            [ <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer">GitHub Profile</a> ]
-          </p>
-          <p style={{ marginTop: '0.5rem' }}>© {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</p>
-        </div>
+        <footer style={{
+          marginTop: '4rem',
+          paddingTop: '1.5rem',
+          borderTop: '1px solid var(--border-color)',
+          fontFamily: 'var(--font-mono)',
+          color: 'var(--text-dim)',
+          fontSize: '0.8rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          flexWrap: 'wrap',
+        }}>
+          <span>© {new Date().getFullYear()} {personalInfo.name}</span>
+          <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer">
+            github.com/{personalInfo.github}
+          </a>
+        </footer>
 
       </div>
     </HashRouter>

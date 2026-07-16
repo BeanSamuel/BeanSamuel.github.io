@@ -46,16 +46,15 @@ const Playground = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                padding: '0.5rem 1.1rem',
+                padding: '0.45rem 1rem',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.85rem',
                 cursor: 'pointer',
                 borderRadius: '4px',
-                color: isActive ? '#000' : g.color,
-                background: isActive ? g.color : 'transparent',
-                border: `1px solid ${isActive ? 'transparent' : g.color}`,
-                boxShadow: isActive ? `0 0 12px ${g.color}` : 'none',
-                transition: 'all 0.25s ease',
+                color: isActive ? g.color : 'var(--text-dim)',
+                background: isActive ? 'var(--accent-soft)' : 'transparent',
+                border: `1px solid ${isActive ? 'var(--border-strong)' : 'var(--border-color)'}`,
+                transition: 'color var(--ease), background-color var(--ease), border-color var(--ease)',
               }}
             >
               {g.icon} {g.label}

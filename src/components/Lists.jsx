@@ -118,7 +118,7 @@ export const WritingList = ({ data }) => (
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-primary)', lineHeight: 1.1 }}>
                 {item.views}
               </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-dim)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-dim)' }}>
                 readers
               </div>
             </div>
@@ -140,8 +140,8 @@ export const WritingList = ({ data }) => (
                   color: 'var(--accent-tertiary)',
                   fontSize: '0.75rem',
                   fontFamily: 'var(--font-mono)',
-                  background: 'rgba(5, 217, 232, 0.08)',
-                  border: '1px solid rgba(5, 217, 232, 0.2)',
+                  background: 'var(--accent-soft)',
+                  border: '1px solid var(--border-strong)',
                   padding: '0.15rem 0.55rem',
                   borderRadius: '3px',
                   whiteSpace: 'nowrap'
@@ -189,7 +189,7 @@ export const ProjectList = ({ data }) => (
             color: 'var(--accent-primary)',
             fontSize: '0.8rem',
             fontFamily: 'var(--font-mono)',
-            background: 'rgba(69, 243, 255, 0.1)',
+            background: 'var(--accent-soft)',
             padding: '0.2rem 0.6rem',
             borderRadius: '3px',
             whiteSpace: 'nowrap'

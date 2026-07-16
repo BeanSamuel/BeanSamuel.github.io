@@ -16,15 +16,14 @@ const tabStyle = (isActive, accent = 'var(--accent-primary)') => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: '0.45rem',
-  padding: '0.45rem 1rem',
+  padding: '0.4rem 0.75rem',
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.88rem',
+  fontSize: '0.85rem',
   textDecoration: 'none',
-  color: isActive ? '#000' : accent === 'var(--accent-primary)' ? 'var(--text-main)' : accent,
-  background: isActive ? accent : 'transparent',
-  border: `1px solid ${isActive ? 'transparent' : accent === 'var(--accent-primary)' ? 'var(--border-color)' : 'rgba(255,42,109,0.3)'}`,
+  color: isActive ? accent : 'var(--text-dim)',
+  background: isActive ? 'var(--accent-soft)' : 'transparent',
   borderRadius: '4px',
-  transition: 'all 0.25s ease',
+  transition: 'color var(--ease), background-color var(--ease)',
   whiteSpace: 'nowrap',
 });
 
@@ -32,13 +31,11 @@ const Navbar = () => (
   <nav style={{
     display: 'flex',
     alignItems: 'center',
-    gap: '0.4rem',
-    padding: '0.85rem 1rem',
-    background: 'rgba(0,0,0,0.45)',
+    gap: '0.15rem',
+    padding: '0.6rem 0',
     borderBottom: '1px solid var(--border-color)',
-    marginBottom: '2rem',
+    marginBottom: '2.5rem',
     flexWrap: 'wrap',
-    backdropFilter: 'blur(6px)',
   }}>
     {tabs.map((tab) => (
       <NavLink

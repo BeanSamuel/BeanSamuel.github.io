@@ -20,14 +20,14 @@ function randomPos(snake) {
 const dpadBtnStyle = {
   width: '52px',
   height: '52px',
-  background: 'rgba(69, 243, 255, 0.08)',
-  border: '1px solid rgba(69, 243, 255, 0.3)',
-  color: '#45f3ff',
+  background: 'var(--accent-soft)',
+  border: '1px solid var(--border-strong)',
+  color: 'var(--accent-primary)',
   fontSize: '1.1rem',
   cursor: 'pointer',
   borderRadius: '4px',
-  fontFamily: "'Fira Code', monospace",
-  transition: 'all 0.15s ease',
+  fontFamily: 'var(--font-mono)',
+  transition: 'border-color var(--ease), background-color var(--ease)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -48,7 +48,7 @@ const SnakeGame = () => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = '#0b0c10';
+    ctx.fillStyle = '#0b0d10';
     ctx.fillRect(0, 0, W, H);
 
     // Grid
@@ -68,13 +68,13 @@ const SnakeGame = () => {
       ctx.shadowBlur = 30;
       ctx.shadowColor = '#45f3ff';
       ctx.fillStyle = '#45f3ff';
-      ctx.font = 'bold 42px "Fira Code", monospace';
+      ctx.font = 'bold 42px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.fillText('SNAKE.EXE', W / 2, H / 2 - 30);
       ctx.shadowBlur = 12;
       ctx.shadowColor = '#ff2a6d';
       ctx.fillStyle = '#ff2a6d';
-      ctx.font = '18px "Fira Code", monospace';
+      ctx.font = '18px "JetBrains Mono", monospace';
       ctx.fillText('[ PRESS START ]', W / 2, H / 2 + 20);
       ctx.shadowBlur = 0;
       return;
@@ -110,14 +110,14 @@ const SnakeGame = () => {
       ctx.shadowBlur = 28;
       ctx.shadowColor = '#ff2a6d';
       ctx.fillStyle = '#ff2a6d';
-      ctx.font = 'bold 42px "Fira Code", monospace';
+      ctx.font = 'bold 42px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.fillText('GAME OVER', W / 2, H / 2 - 20);
 
       ctx.shadowBlur = 15;
       ctx.shadowColor = '#45f3ff';
       ctx.fillStyle = '#45f3ff';
-      ctx.font = '20px "Fira Code", monospace';
+      ctx.font = '20px "JetBrains Mono", monospace';
       ctx.fillText(`SCORE: ${gs.score}`, W / 2, H / 2 + 28);
       ctx.shadowBlur = 0;
     }
@@ -285,7 +285,7 @@ const SnakeGame = () => {
           {status === 'playing' && (
             <span>
               <span style={{ color: 'var(--text-dim)' }}>SPEED </span>
-              <span style={{ color: '#05d9e8' }}>LV.{speedLevel}</span>
+              <span style={{ color: 'var(--accent-tertiary)' }}>LV.{speedLevel}</span>
             </span>
           )}
         </div>
@@ -302,7 +302,6 @@ const SnakeGame = () => {
               maxWidth: '100%',
               display: 'block',
               margin: '0 auto',
-              boxShadow: '0 0 24px rgba(69, 243, 255, 0.08)',
               touchAction: 'none',
             }}
           />

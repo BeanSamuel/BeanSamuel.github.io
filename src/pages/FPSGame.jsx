@@ -254,12 +254,12 @@ const FPSGame = () => {
       ctx.shadowBlur = 30;
       ctx.shadowColor = '#45f3ff';
       ctx.fillStyle = '#45f3ff';
-      ctx.font = 'bold 52px "Fira Code", monospace';
+      ctx.font = 'bold 52px "JetBrains Mono", monospace';
       ctx.fillText('CYBER.FPS', SW / 2, SH / 2 - 40);
       ctx.shadowBlur = 12;
       ctx.shadowColor = '#ff2a6d';
       ctx.fillStyle = '#ff2a6d';
-      ctx.font = '20px "Fira Code", monospace';
+      ctx.font = '20px "JetBrains Mono", monospace';
       ctx.fillText('[ CLICK START TO PLAY ]', SW / 2, SH / 2 + 20);
       ctx.shadowBlur = 0;
       return;
@@ -432,14 +432,14 @@ const FPSGame = () => {
     ctx.fillRect(12, SH - 48, hpFrac * 176, 24);
     ctx.strokeStyle = 'rgba(69,243,255,0.35)'; ctx.lineWidth = 1;
     ctx.strokeRect(10, SH - 50, 180, 28);
-    ctx.fillStyle = '#fff'; ctx.font = '11px "Fira Code",monospace'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff'; ctx.font = '11px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
     ctx.fillText(`HP ${Math.max(0, Math.round(g.health))}`, 100, SH - 31);
 
     // Ammo
     ctx.fillStyle = 'rgba(0,0,0,0.65)';
     ctx.fillRect(SW - 120, SH - 50, 110, 28);
     ctx.fillStyle = g.reloadTimer > 0 ? '#ffbd2e' : g.ammo === 0 ? '#ff5f56' : '#45f3ff';
-    ctx.font = '13px "Fira Code",monospace'; ctx.textAlign = 'center';
+    ctx.font = '13px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
     ctx.fillText(
       g.reloadTimer > 0 ? 'RELOADING' : `${g.ammo} / ${g.reserve}`,
       SW - 65, SH - 31
@@ -488,7 +488,7 @@ const FPSGame = () => {
       ctx.textAlign = 'center';
       ctx.shadowBlur = 20; ctx.shadowColor = '#45f3ff';
       ctx.fillStyle = `rgba(69,243,255,${a})`;
-      ctx.font = 'bold 34px "Fira Code",monospace';
+      ctx.font = 'bold 34px "JetBrains Mono",monospace';
       ctx.fillText(g.banner.text, SW / 2, 80);
       ctx.shadowBlur = 0;
     }
@@ -497,7 +497,7 @@ const FPSGame = () => {
     if (g.phase === 'playing' && !g.locked && !g.touch) {
       ctx.textAlign = 'center';
       ctx.fillStyle = 'rgba(197,198,199,0.75)';
-      ctx.font = '12px "Fira Code",monospace';
+      ctx.font = '12px "JetBrains Mono",monospace';
       ctx.fillText('click to lock mouse look · esc to release', SW / 2, SH - 62);
     }
 
@@ -508,17 +508,17 @@ const FPSGame = () => {
       ctx.textAlign = 'center';
       if (g.phase === 'gameover') {
         ctx.fillStyle = '#ff2a6d'; ctx.shadowBlur = 30; ctx.shadowColor = '#ff2a6d';
-        ctx.font = 'bold 54px "Fira Code",monospace';
+        ctx.font = 'bold 54px "JetBrains Mono",monospace';
         ctx.fillText('YOU DIED', SW / 2, SH / 2 - 30);
       } else {
         ctx.fillStyle = '#45f3ff'; ctx.shadowBlur = 30; ctx.shadowColor = '#45f3ff';
-        ctx.font = 'bold 42px "Fira Code",monospace';
+        ctx.font = 'bold 42px "JetBrains Mono",monospace';
         ctx.fillText('MISSION CLEAR', SW / 2, SH / 2 - 30);
       }
       ctx.shadowBlur = 12; ctx.shadowColor = '#45f3ff';
-      ctx.fillStyle = '#45f3ff'; ctx.font = '22px "Fira Code",monospace';
+      ctx.fillStyle = '#45f3ff'; ctx.font = '22px "JetBrains Mono",monospace';
       ctx.fillText(`SCORE: ${g.score}`, SW / 2, SH / 2 + 20);
-      ctx.fillStyle = 'rgba(197,198,199,0.8)'; ctx.font = '13px "Fira Code",monospace';
+      ctx.fillStyle = 'rgba(197,198,199,0.8)'; ctx.font = '13px "JetBrains Mono",monospace';
       ctx.fillText(
         `wave ${g.wave}/${WAVES.length} · ${g.totalKills} eliminated`,
         SW / 2, SH / 2 + 50
@@ -850,7 +850,7 @@ const FPSGame = () => {
             </span>
             <span style={{ color: 'var(--text-dim)' }}> / {reserve}</span>
           </span>
-          <span><span style={{ color: 'var(--text-dim)' }}>WAVE </span><span style={{ color: '#45f3ff' }}>{wave}/{WAVES.length}</span></span>
+          <span><span style={{ color: 'var(--text-dim)' }}>WAVE </span><span style={{ color: 'var(--accent-primary)' }}>{wave}/{WAVES.length}</span></span>
           <span><span style={{ color: 'var(--text-dim)' }}>LEFT </span><span style={{ color: 'var(--accent-secondary)' }}>{Math.max(0, waveTotal - kills)}</span></span>
           <span><span style={{ color: 'var(--text-dim)' }}>SCORE </span><span style={{ color: '#ffbb00' }}>{score}</span></span>
           <span><span style={{ color: 'var(--text-dim)' }}>STATUS </span><span style={{ color: phaseColor }}>{phase.toUpperCase()}</span></span>
@@ -869,7 +869,6 @@ const FPSGame = () => {
               maxWidth: '100%',
               display: 'block',
               margin: '0 auto',
-              boxShadow: '0 0 30px rgba(69,243,255,0.1)',
               cursor: 'crosshair',
               touchAction: 'none',
             }}
@@ -896,7 +895,7 @@ const FPSGame = () => {
               <button {...holdKey('ArrowRight')} style={padStyle}>↻</button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', justifyContent: 'center' }}>
-              <button onPointerDown={(e) => { e.preventDefault(); shoot(); }} style={{ ...padStyle, width: '92px', color: '#ff2a6d', borderColor: 'rgba(255,42,109,0.4)' }}>FIRE</button>
+              <button onPointerDown={(e) => { e.preventDefault(); shoot(); }} style={{ ...padStyle, width: '92px', color: 'var(--accent-secondary)' }}>FIRE</button>
               <button onPointerDown={(e) => { e.preventDefault(); reload(); }} style={{ ...padStyle, width: '92px' }}>RELOAD</button>
             </div>
           </div>
@@ -906,7 +905,7 @@ const FPSGame = () => {
           [ W/A/S/D ] Move &nbsp;·&nbsp; [ Mouse / ←→ ] Look &nbsp;·&nbsp; [ Click / SPACE ] Shoot &nbsp;·&nbsp; [ R ] Reload
         </p>
         <p style={{ textAlign: 'center', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', marginTop: '0.4rem' }}>
-          Survive <span style={{ color: '#45f3ff' }}>{WAVES.length}</span> waves · they shoot back, and they hunt you around corners
+          Survive <span style={{ color: 'var(--accent-primary)' }}>{WAVES.length}</span> waves · they shoot back, and they hunt you around corners
         </p>
       </SectionViewer>
     </div>
@@ -915,13 +914,13 @@ const FPSGame = () => {
 
 const padStyle = {
   height: '46px',
-  background: 'rgba(69, 243, 255, 0.08)',
-  border: '1px solid rgba(69, 243, 255, 0.3)',
-  color: '#45f3ff',
+  background: 'var(--accent-soft)',
+  border: '1px solid var(--border-strong)',
+  color: 'var(--accent-primary)',
   fontSize: '0.9rem',
   cursor: 'pointer',
   borderRadius: '4px',
-  fontFamily: "'Fira Code', monospace",
+  fontFamily: 'var(--font-mono)',
   transition: 'all 0.15s ease',
   display: 'flex',
   alignItems: 'center',

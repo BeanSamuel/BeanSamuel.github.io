@@ -10,9 +10,9 @@ const BAR_COLORS = ['var(--accent-primary)', 'var(--accent-secondary)', 'var(--a
 const StatTile = ({ label, value, sub }) => (
   <div
     style={{
-      background: 'rgba(0,0,0,0.5)',
+      background: 'var(--panel-raised)',
       border: '1px solid var(--border-color)',
-      borderRadius: '8px',
+      borderRadius: '6px',
       padding: '1.1rem 1rem',
       textAlign: 'left',
     }}
@@ -31,9 +31,7 @@ const StatTile = ({ label, value, sub }) => (
     <div
       style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
-        textTransform: 'uppercase',
-        letterSpacing: '1px',
+        fontSize: '0.75rem',
         color: 'var(--text-dim)',
         marginTop: '0.35rem',
       }}
@@ -72,13 +70,12 @@ const Bar = ({ label, count, max, color, blurb, url }) => (
       </span>
       <span style={{ color, fontWeight: 700, flexShrink: 0 }}>{count}</span>
     </div>
-    <div style={{ height: '8px', background: 'rgba(0,0,0,0.6)', borderRadius: '4px', overflow: 'hidden' }}>
+    <div style={{ height: '6px', background: 'var(--bg-color)', borderRadius: '3px', overflow: 'hidden' }}>
       <div
         style={{
           width: `${Math.max((count / max) * 100, 2)}%`,
           height: '100%',
           background: color,
-          boxShadow: `0 0 8px ${color}`,
           transition: 'width 0.6s ease',
         }}
       />
@@ -131,10 +128,8 @@ const Competitive = () => {
         <h3
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.8rem',
-            textTransform: 'uppercase',
-            letterSpacing: '1.5px',
-            color: 'var(--accent-secondary)',
+            fontSize: '0.9rem',
+            color: 'var(--text-main)',
             marginBottom: '1rem',
           }}
         >

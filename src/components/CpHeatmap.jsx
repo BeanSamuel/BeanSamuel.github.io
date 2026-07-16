@@ -8,10 +8,10 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 // Buckets tuned to this repo's rhythm: a normal session lands 1-2 problems,
 // a grind day lands 8+.
 const LEVELS = [
-  { min: 0, bg: 'rgba(69, 243, 255, 0.04)', border: 'rgba(69, 243, 255, 0.12)' },
-  { min: 1, bg: 'rgba(69, 243, 255, 0.25)', border: 'rgba(69, 243, 255, 0.3)' },
-  { min: 3, bg: 'rgba(69, 243, 255, 0.45)', border: 'rgba(69, 243, 255, 0.5)' },
-  { min: 5, bg: 'rgba(69, 243, 255, 0.7)', border: 'rgba(69, 243, 255, 0.75)' },
+  { min: 0, bg: 'rgba(87, 201, 214, 0.05)', border: 'rgba(87, 201, 214, 0.12)' },
+  { min: 1, bg: 'rgba(87, 201, 214, 0.22)', border: 'rgba(87, 201, 214, 0.28)' },
+  { min: 3, bg: 'rgba(87, 201, 214, 0.42)', border: 'rgba(87, 201, 214, 0.48)' },
+  { min: 5, bg: 'rgba(87, 201, 214, 0.66)', border: 'rgba(87, 201, 214, 0.72)' },
   { min: 8, bg: 'var(--accent-primary)', border: 'var(--accent-primary)' },
 ];
 
@@ -131,7 +131,6 @@ const CpHeatmap = ({ activity }) => {
                         borderRadius: '2px',
                         background: level.bg,
                         border: `1px solid ${level.border}`,
-                        boxShadow: day.count >= 8 ? '0 0 6px var(--accent-primary)' : 'none',
                       }}
                     />
                   );

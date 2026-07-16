@@ -1,16 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-  --bg-color: #0b0c10;
-  --panel-bg: rgba(15, 20, 25, 0.85);
-  --text-main: #c5c6c7;
-  --text-dim: #8b8e94;
-  --accent-primary: #45f3ff;
-  --accent-secondary: #ff2a6d;
-  --accent-tertiary: #05d9e8;
-  --border-color: rgba(69, 243, 255, 0.2);
-  --font-mono: 'Fira Code', monospace;
-  --font-sans: 'Inter', sans-serif;
+  --bg-color: #0b0d10;
+  --panel-bg: #12151a;
+  --panel-raised: #171b21;
+  --text-main: #d2d6dd;
+  --text-dim: #8a919e;
+  /* Desaturated from the old neon #45f3ff — still cyan, no longer shouting. */
+  --accent-primary: #57c9d6;
+  --accent-secondary: #c76b86;
+  --accent-tertiary: #6fb3bd;
+  --accent-soft: rgba(87, 201, 214, 0.1);
+  --border-color: #232830;
+  --border-strong: #333a45;
+  /* Neither Latin face ships Traditional Chinese, so the CJK fallbacks are
+     named explicitly — left to the generic sans-serif, 趙啟翔 and 國立中央大學
+     resolve to a Simplified-shaped face on some systems. */
+  --font-cjk: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, var(--font-cjk);
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, var(--font-cjk);
+  --ease: 180ms ease;
 }
 
 * {
@@ -23,8 +32,9 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-color);
   color: var(--text-main);
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
@@ -33,46 +43,17 @@ body {
   flex-direction: column;
 }
 
-/* Background Matrix / Grid pattern */
-.bg-grid {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.15;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Glow effects */
-.glow-text {
-  text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-tertiary);
-}
-
 .terminal-window {
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(69, 243, 255, 0.05);
-  backdrop-filter: blur(10px);
-  margin-bottom: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.terminal-window:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(69, 243, 255, 0.15);
-  border-color: rgba(69, 243, 255, 0.5);
+  margin-bottom: 2.5rem;
 }
 
 .terminal-header {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 0.9rem;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
@@ -84,110 +65,89 @@ body {
 }
 
 .control {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  background: var(--border-strong);
 }
-.control.close { background: #ff5f56; }
-.control.minimize { background: #ffbd2e; }
-.control.maximize { background: #27c93f; }
 
 .window-title {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
-  margin-left: 1rem;
+  margin-left: 0.9rem;
 }
 
 .terminal-body {
   padding: 1.5rem;
-  font-family: var(--font-mono);
 }
 
-/* Typography styles */
-h1, h2, h3 {
+/* Typography */
+h1, h2, h3, h4 {
   font-family: var(--font-sans);
-  color: #fff;
+  color: #eef0f4;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.3rem;
   margin-bottom: 1.5rem;
-  display: inline-block;
-  border-bottom: 2px solid var(--accent-primary);
-  padding-bottom: 0.3rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.05rem;
 }
 
 a {
   color: var(--accent-primary);
   text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color var(--ease);
 }
 a:hover {
-  color: #fff;
-  text-shadow: 0 0 8px var(--accent-primary);
+  color: #9fe4ed;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-/* Cyber Button */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Buttons — kept the class name; the neon sweep and glow are gone. */
 .cyber-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   background: transparent;
   color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
-  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--border-strong);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: border-color var(--ease), background-color var(--ease);
   text-decoration: none;
 }
 
-.cyber-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--accent-primary);
-  transition: left 0.3s ease;
-  z-index: -1;
-}
-
 .cyber-btn:hover {
-  color: #000;
-  box-shadow: 0 0 15px var(--accent-primary);
-}
-.cyber-btn:hover::before {
-  left: 0;
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
+  text-decoration: none;
 }
 
-/* Animations */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.cursor-blink {
-  animation: blink 1s step-end infinite;
-  display: inline-block;
-  width: 10px;
-  height: 1.2em;
-  background-color: var(--accent-primary);
-  vertical-align: middle;
-}
-
-/* Responsive container */
+/* Layout */
 .container {
-  max-width: 1000px;
+  max-width: 940px;
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
@@ -195,22 +155,19 @@ a:hover {
 
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 1.25rem;
+  }
+  h1 {
+    font-size: 1.75rem;
   }
 }
 
-/* Watermarks */
-.watermark-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 1.5rem;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-.watermark-container:hover {
-  opacity: 1;
-}
-.watermark-container img {
-  border-radius: 4px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

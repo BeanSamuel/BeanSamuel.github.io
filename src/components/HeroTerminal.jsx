@@ -1,52 +1,37 @@
-import { useState, useEffect } from 'react';
 import { personalInfo } from '../data/resumeData';
 
-const HeroTerminal = () => {
-  const [textIndex, setTextIndex] = useState(0);
+const promptStyle = { color: 'var(--accent-primary)', userSelect: 'none' };
+const blockStyle = { marginBottom: '1.25rem' };
+const outputStyle = { color: 'var(--text-main)', margin: '0.35rem 0 0 0' };
 
-  const lines = [
-    `> System initializing...`,
-    `> Loading user profile: ${personalInfo.name} (${personalInfo.chineseName})`,
-    `> Access granted.`,
-    `> Role: ${personalInfo.role}`,
-    `> Mission: Bridging AI, Algorithms, and Full-Stack Architecture.`,
-    `> Run explore.sh ...`
-  ];
-
-  useEffect(() => {
-    if (textIndex < lines.length) {
-      const timer = setTimeout(() => {
-        setTextIndex(prev => prev + 1);
-      }, 700); // 700ms delay per line
-      return () => clearTimeout(timer);
-    }
-  }, [textIndex, lines.length]);
-
-  return (
-    <div className="terminal-window">
-      <div className="terminal-header">
-        <div className="window-controls">
-          <div className="control close"></div>
-          <div className="control minimize"></div>
-          <div className="control maximize"></div>
-        </div>
-        <div className="window-title">bash - root@localhost</div>
+const HeroTerminal = () => (
+  <div className="terminal-window">
+    <div className="terminal-header">
+      <div className="window-controls">
+        <div className="control"></div>
+        <div className="control"></div>
+        <div className="control"></div>
       </div>
-      <div className="terminal-body" style={{ minHeight: '200px' }}>
-        {lines.slice(0, textIndex + 1).map((line, idx) => (
-          <div key={idx} style={{ marginBottom: '0.8rem', color: idx === lines.length - 1 ? 'var(--accent-primary)' : 'var(--text-main)' }}>
-            {line}
-          </div>
-        ))}
-        {textIndex >= lines.length && (
-          <div>
-            <span style={{ color: 'var(--accent-primary)' }}>guest@portfolio:~$</span> 
-            <span className="cursor-blink"></span>
-          </div>
-        )}
+      <div className="window-title">~/about</div>
+    </div>
+    <div className="terminal-body" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem' }}>
+      <div style={blockStyle}>
+        <div><span style={promptStyle}>$</span> whoami</div>
+        <p style={outputStyle}>
+          {personalInfo.name} ({personalInfo.chineseName}) — CS undergrad at National Central University.
+        </p>
+      </div>
+
+      <div style={{ ...blockStyle, marginBottom: 0 }}>
+        <div><span style={promptStyle}>$</span> cat about.txt</div>
+        <p style={outputStyle}>
+          Research intern at Academia Sinica, working on how large pre-trained models line up
+          meaning across modalities. ICPC regional medalist (silver &amp; bronze). I build backends
+          when the experiments need somewhere to run.
+        </p>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default HeroTerminal;
