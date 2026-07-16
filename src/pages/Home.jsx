@@ -1,9 +1,21 @@
+import { TypeAnimation } from 'react-type-animation';
 import { personalInfo, abilities } from '../data/resumeData';
 import SectionViewer from '../components/SectionViewer';
 import HeroTerminal from '../components/HeroTerminal';
+import useReducedMotion from '../hooks/useReducedMotion';
 import { FaGithub, FaEnvelope } from 'react-icons/fa';
 
+const ROLES = [
+  'NLP & AI Researcher',
+  'Backend Developer',
+  'Cross-Modal Representation Learner',
+];
+
+const HOLD_MS = 2000;
+
 const Home = () => {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div>
       <header style={{
@@ -32,14 +44,26 @@ const Home = () => {
           <h1>{personalInfo.name}</h1>
           <p style={{ color: 'var(--text-dim)', fontSize: '1rem' }}>{personalInfo.chineseName}</p>
 
-          <p style={{
+          {/* Height is reserved so the cycling text cannot shift the buttons
+              below it as lines of different length swap in. */}
+          <div style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.85rem',
-            color: 'var(--accent-tertiary)',
+            fontSize: '1.1rem',
+            color: 'var(--accent-secondary)',
             marginTop: '0.5rem',
+            minHeight: '3.4rem',
           }}>
-            {personalInfo.role}
-          </p>
+            {reducedMotion ? (
+              <span>{personalInfo.role}</span>
+            ) : (
+              <TypeAnimation
+                sequence={ROLES.flatMap((role) => [role, HOLD_MS])}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+              />
+            )}
+          </div>
 
           <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <a href={`https://github.com/${personalInfo.github}`} target="_blank" rel="noopener noreferrer" className="cyber-btn">

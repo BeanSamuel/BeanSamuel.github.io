@@ -68,8 +68,12 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--border-strong);
 }
+/* The real macOS colours: these three dots are the one place the terminal
+   frame should be literal, so they read as controls and not as decoration. */
+.control.close { background: #ff5f56; }
+.control.minimize { background: #ffbd2e; }
+.control.maximize { background: #27c93f; }
 
 .window-title {
   font-family: var(--font-mono);
@@ -143,6 +147,21 @@ a:hover {
   border-color: var(--accent-primary);
   background: var(--accent-soft);
   text-decoration: none;
+}
+
+/* Terminal caret */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background-color: var(--accent-primary);
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
 }
 
 /* Layout */

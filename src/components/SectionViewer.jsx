@@ -4,9 +4,9 @@ const SectionViewer = ({ title, children }) => {
     <div className="terminal-window section-viewer">
       <div className="terminal-header">
         <div className="window-controls">
-          <div className="control"></div>
-          <div className="control"></div>
-          <div className="control"></div>
+          <div className="control close"></div>
+          <div className="control minimize"></div>
+          <div className="control maximize"></div>
         </div>
         <div className="window-title">~/portfolio/{title.toLowerCase().replace(/\s+/g, '_')}</div>
       </div>
