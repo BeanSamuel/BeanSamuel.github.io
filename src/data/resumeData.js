@@ -4,7 +4,7 @@ export const personalInfo = {
   github: "BeanSamuel",
   email: "samuelchao921221@gmail.com",
   website: "https://beansamuel.github.io",
-  role: "NLP Researcher | ICPC Competitor | Backend Developer",
+  role: "NLP Researcher | Backend Developer",
 };
 
 export const education = [
@@ -200,7 +200,7 @@ export const abilities = [
   {
     category: "Algorithms & Competitive",
     items: [
-      "ICPC Competitor (Silver & Bronze Medals)",
+      "Competitive Programming (ICPC Regionals)",
       "Data Structures & Algorithm Design",
       "CPE: 6 / 7 Problems Solved",
       "Dynamic Programming & Graph Theory"

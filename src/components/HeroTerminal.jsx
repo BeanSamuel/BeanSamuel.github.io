@@ -13,8 +13,7 @@ const LINES = [
     kind: 'out',
     text:
       'Research intern at Academia Sinica, working on how large pre-trained models line up ' +
-      'meaning across modalities. ICPC regional medalist (silver & bronze). I build backends ' +
-      'when the experiments need somewhere to run.',
+      'meaning across modalities. I build backends when the experiments need somewhere to run.',
   },
 ];
 
