@@ -1,16 +1,16 @@
 {
   "repo": "BeanSamuel/cpp_practice",
-  "generatedAt": "2026-07-21",
+  "generatedAt": "2026-07-22",
   "totals": {
-    "headline": 450,
-    "problems": 459,
-    "cppFiles": 473,
+    "headline": 460,
+    "problems": 464,
+    "cppFiles": 478,
     "templates": 14,
-    "commits": 496,
+    "commits": 505,
     "sourceCount": 8,
     "firstDate": "2025-04-20",
-    "activeDays": 128,
-    "currentStreak": 7,
+    "activeDays": 129,
+    "currentStreak": 8,
     "longestStreak": 12
   },
   "sources": [
@@ -26,7 +26,7 @@
       "key": "zerojudge",
       "emoji": "🏯",
       "name": "ZeroJudge",
-      "count": 116,
+      "count": 119,
       "blurb": "Taiwan's finest gauntlet of WA verdicts",
       "url": "https://zerojudge.tw/"
     },
@@ -34,7 +34,7 @@
       "key": "cses",
       "emoji": "🇫🇮",
       "name": "CSES",
-      "count": 93,
+      "count": 94,
       "blurb": "The classic problem set, one category at a time (see below)",
       "url": "https://cses.fi/problemset/"
     },
@@ -42,7 +42,7 @@
       "key": "apcs",
       "emoji": "🎓",
       "name": "APCS",
-      "count": 37,
+      "count": 38,
       "blurb": "Real exam past papers + simulations",
       "url": "https://apcs.csie.ntnu.edu.tw/"
     },
@@ -80,7 +80,7 @@
     }
   ],
   "cses": {
-    "total": 93,
+    "total": 94,
     "categories": [
       {
         "name": "Sorting and Searching",
@@ -117,6 +117,10 @@
       {
         "name": "Additional Problems II",
         "count": 2
+      },
+      {
+        "name": "Additional Problems I",
+        "count": 1
       },
       {
         "name": "String Algorithms",
@@ -256,9 +260,60 @@
     "2026-07-18": 9,
     "2026-07-19": 5,
     "2026-07-20": 12,
-    "2026-07-21": 3
+    "2026-07-21": 3,
+    "2026-07-22": 5
   },
   "recent": [
+    {
+      "date": "2026-07-22",
+      "sha": "0e8e7f2",
+      "source": "cses",
+      "sourceName": "CSES",
+      "emoji": "🇫🇮",
+      "category": "Additional Problems I",
+      "problem": "Multiplication_Table",
+      "path": "CSES/Additional_Problems_I/Multiplication_Table.cpp"
+    },
+    {
+      "date": "2026-07-22",
+      "sha": "19d8579",
+      "source": "zerojudge",
+      "sourceName": "ZeroJudge",
+      "emoji": "🏯",
+      "category": "ZeroJudge",
+      "problem": "k605",
+      "path": "zerojudge/k605.cpp"
+    },
+    {
+      "date": "2026-07-22",
+      "sha": "ed0fcb7",
+      "source": "apcs",
+      "sourceName": "APCS",
+      "emoji": "🎓",
+      "category": "2026 1 Beginner",
+      "problem": "A",
+      "path": "APCS/2026_1_Beginner/A.cpp"
+    },
+    {
+      "date": "2026-07-22",
+      "sha": "de727c4",
+      "source": "zerojudge",
+      "sourceName": "ZeroJudge",
+      "emoji": "🏯",
+      "category": "ZeroJudge",
+      "problem": "r937",
+      "path": "zerojudge/r937.cpp"
+    },
+    {
+      "date": "2026-07-22",
+      "sha": "88e3b58",
+      "source": "zerojudge",
+      "sourceName": "ZeroJudge",
+      "emoji": "🏯",
+      "category": "ZeroJudge",
+      "problem": "c907",
+      "path": "zerojudge/c907.cpp"
+    },
     {
       "date": "2026-07-21",
       "sha": "3a04208",
@@ -448,56 +503,6 @@
       "category": "Graph Algorithms",
       "problem": "Road_Reparation",
       "path": "CSES/Graph_Algorithms/Road_Reparation.cpp"
-    },
-    {
-      "date": "2026-07-19",
-      "sha": "a2b419e",
-      "source": "zerojudge",
-      "sourceName": "ZeroJudge",
-      "emoji": "🏯",
-      "category": "ZeroJudge",
-      "problem": "f679",
-      "path": "zerojudge/f679.cpp"
-    },
-    {
-      "date": "2026-07-18",
-      "sha": "dcd486d",
-      "source": "zerojudge",
-      "sourceName": "ZeroJudge",
-      "emoji": "🏯",
-      "category": "ZeroJudge",
-      "problem": "f640",
-      "path": "zerojudge/f640.cpp"
-    },
-    {
-      "date": "2026-07-18",
-      "sha": "24128cc",
-      "source": "apcs",
-      "sourceName": "APCS",
-      "emoji": "🎓",
-      "category": "2019 2",
-      "problem": "C",
-      "path": "APCS/2019_2/C.cpp"
-    },
-    {
-      "date": "2026-07-18",
-      "sha": "96bf335",
-      "source": "zerojudge",
-      "sourceName": "ZeroJudge",
-      "emoji": "🏯",
-      "category": "ZeroJudge",
-      "problem": "c002",
-      "path": "zerojudge/c002.cpp"
-    },
-    {
-      "date": "2026-07-18",
-      "sha": "c43f211",
-      "source": "zerojudge",
-      "sourceName": "ZeroJudge",
-      "emoji": "🏯",
-      "category": "ZeroJudge",
-      "problem": "d283",
-      "path": "zerojudge/d283.cpp"
     }
   ]
 }
