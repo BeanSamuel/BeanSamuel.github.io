@@ -1,7 +1,7 @@
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { FaDragon, FaCrosshairs } from 'react-icons/fa';
 import SnakeGame from './SnakeGame';
-import FPSGame from './FPSGame';
+import FPSGame from '../games/fps/FPSShell';
 
 const GAMES = [
   {
