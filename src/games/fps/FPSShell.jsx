@@ -4,6 +4,7 @@ import Survival from './modes/Survival';
 import AimTrainer from './modes/AimTrainer';
 import VsAI from './modes/VsAI';
 import Online from './modes/Online';
+import { SensitivitySlider } from './modes/SensitivitySlider';
 
 // Mode picker for Cyber FPS. Switching modes unmounts the previous one, which
 // tears down its render loop, controls and (for online) its P2P connection.
@@ -21,7 +22,11 @@ const FPSShell = () => {
 
   return (
     <SectionViewer title="Cyber FPS">
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+      <div style={{
+        display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap',
+        alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         {MODES.map((m) => {
           const on = m.key === mode;
           return (
@@ -41,6 +46,8 @@ const FPSShell = () => {
             </button>
           );
         })}
+        </div>
+        <SensitivitySlider />
       </div>
 
       {/* key forces a fresh mount per mode so loops/connections reset cleanly */}

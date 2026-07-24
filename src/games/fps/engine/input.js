@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { getMouseSens, subscribeSensitivity } from './settings';
 
 // Shared control layer. Collects keyboard, mouse-look (pointer lock) and touch
 // into a mutable `keys` map + accumulated mouse delta, and exposes a
@@ -8,12 +9,20 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 const MOVE_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 
-export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCount = 0, onFire, onReload, onWeapon, onPause }) {
+export function useControls({ canvasRef, isActive, weaponCount = 0, onFire, onReload, onWeapon, onPause }) {
   const keys = useRef({});
   const mouseDX = useRef(0);
   const locked = useRef(false);
   const touch = useRef(false);
   const weapon = useRef(0);
+
+  // Mouse-look sensitivity lives in the shared settings store. We mirror it into
+  // a ref (rather than reading it as a prop) so sampleInput can stay a stable,
+  // dependency-free callback: adjusting the slider mid-round updates sensRef and
+  // takes effect on the very next tick without rebuilding the controls API or
+  // invalidating a mode's memoised render loop.
+  const sensRef = useRef(getMouseSens());
+  useEffect(() => subscribeSensitivity(() => { sensRef.current = getMouseSens(); }), []);
 
   // Latest-ref pattern: callers pass fresh inline functions (isActive, onFire…)
   // every render. If the effects below depended on them they would re-subscribe
@@ -79,7 +88,7 @@ export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCou
     if (k.KeyD) strafe += 1;
     if (k.KeyA) strafe -= 1;
 
-    let turn = mouseDX.current * mouseSens;
+    let turn = mouseDX.current * sensRef.current;
     if (k.ArrowLeft) turn -= turnSpeed * dt;
     if (k.ArrowRight) turn += turnSpeed * dt;
     mouseDX.current = 0;
@@ -93,7 +102,7 @@ export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCou
       dash: !!k.ShiftLeft || !!k.ShiftRight,
       weapon: weapon.current,
     };
-  }, [mouseSens]);
+  }, []);
 
   // Request pointer lock on the canvas. Must be called from a user gesture
   // (canvas click or a Resume button click), or the browser rejects it.

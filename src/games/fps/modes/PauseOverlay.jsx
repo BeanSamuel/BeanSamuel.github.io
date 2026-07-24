@@ -1,3 +1,5 @@
+import { SensitivitySlider } from './SensitivitySlider';
+
 // Pause menu shown over the canvas when pointer lock is lost mid-game (Esc).
 // Absolutely positioned to cover the canvas; buttons are real DOM so the freed
 // cursor can click them. Resume re-locks the pointer (button click = the user
@@ -24,6 +26,7 @@ export function PauseOverlay({ onResume, onQuit, quitLabel = 'QUIT' }) {
           [ {quitLabel} ]
         </button>
       </div>
+      <SensitivitySlider />
       <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Esc pauses · Resume re-locks the mouse</div>
     </div>
   );
