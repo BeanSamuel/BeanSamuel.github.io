@@ -15,16 +15,26 @@ export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCou
   const touch = useRef(false);
   const weapon = useRef(0);
 
+  // Latest-ref pattern: callers pass fresh inline functions (isActive, onFire…)
+  // every render. If the effects below depended on them, they would re-subscribe
+  // each render — and the mouse effect's cleanup calls exitPointerLock(), so a
+  // single HUD re-render after a shot would release pointer lock and the mouse
+  // would pop out mid-game. Reading them through a ref keeps the listeners
+  // mounted once, so pointer lock is only dropped on real unmount.
+  const cb = useRef({});
+  cb.current = { isActive, onFire, onReload, onWeapon, weaponCount };
+
   useEffect(() => {
     const onDown = (e) => {
-      if (!isActive()) { keys.current[e.code] = true; return; }
+      const c = cb.current;
+      if (!c.isActive()) { keys.current[e.code] = true; return; }
       keys.current[e.code] = true;
-      if (e.code === 'Space') { e.preventDefault(); onFire?.(); }
-      if (e.code === 'KeyR') { e.preventDefault(); onReload?.(); }
+      if (e.code === 'Space') { e.preventDefault(); c.onFire?.(); }
+      if (e.code === 'KeyR') { e.preventDefault(); c.onReload?.(); }
       if (/^Digit[1-5]$/.test(e.code)) {
         e.preventDefault();
         const idx = +e.code.slice(5) - 1;
-        if (!weaponCount || idx < weaponCount) { weapon.current = idx; onWeapon?.(idx); }
+        if (!c.weaponCount || idx < c.weaponCount) { weapon.current = idx; c.onWeapon?.(idx); }
       }
       if (MOVE_KEYS_INCLUDES(e.code)) e.preventDefault();
     };
@@ -35,14 +45,13 @@ export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCou
       window.removeEventListener('keydown', onDown);
       window.removeEventListener('keyup', onUp);
     };
-  }, [isActive, onFire, onReload, onWeapon, weaponCount]);
+  }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
     const onMove = (e) => {
-      if (locked.current && isActive()) mouseDX.current += e.movementX;
+      if (locked.current && cb.current.isActive()) mouseDX.current += e.movementX;
     };
-    const onLockChange = () => { locked.current = document.pointerLockElement === canvas; };
+    const onLockChange = () => { locked.current = document.pointerLockElement === canvasRef.current; };
     document.addEventListener('mousemove', onMove);
     document.addEventListener('pointerlockchange', onLockChange);
     return () => {
@@ -50,7 +59,7 @@ export function useControls({ canvasRef, isActive, mouseSens = 0.0025, weaponCou
       document.removeEventListener('pointerlockchange', onLockChange);
       if (document.pointerLockElement) document.exitPointerLock();
     };
-  }, [canvasRef, isActive]);
+  }, [canvasRef]);
 
   // Snapshot the current control state as a bounded InputState. `turn` folds in
   // the accumulated mouse delta and is cleared so it is consumed exactly once.
