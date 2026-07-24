@@ -8,6 +8,7 @@ import {
   drawBanner, drawTitle, drawEndOverlay,
 } from '../engine/render';
 import { TouchPad } from './touch';
+import { PauseOverlay, CanvasStage } from './PauseOverlay';
 
 const map = survivalMap;
 
@@ -35,6 +36,7 @@ const Survival = () => {
     ammo: CFG.magSize, reserve: CFG.reserveStart,
     kills: 0, wave: 0, waveTotal: 0, reloading: false,
   });
+  const [paused, setPaused] = useState(false);
 
   const syncHud = useCallback(() => {
     const g = gs.current;
@@ -155,11 +157,23 @@ const Survival = () => {
     syncHud();
   }, [syncHud, reload]);
 
+  // Esc releases pointer lock (browser-enforced); useControls reports that as a
+  // pause so we freeze the sim and show the menu.
+  const pause = useCallback(() => {
+    const g = gs.current;
+    if (!g || g.phase !== 'playing' || g.paused) return;
+    g.paused = true;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    render();
+    setPaused(true);
+  }, [render]);
+
   const controls = useControls({
     canvasRef,
-    isActive: () => gs.current?.phase === 'playing',
+    isActive: () => gs.current?.phase === 'playing' && !gs.current?.paused,
     onFire: shoot,
     onReload: reload,
+    onPause: pause,
   });
 
   const step = useCallback((dt) => {
@@ -235,7 +249,7 @@ const Survival = () => {
 
   const loop = useCallback((now) => {
     const g = gs.current;
-    if (!g || g.phase !== 'playing') return;
+    if (!g || g.phase !== 'playing' || g.paused) return;
     const dt = Math.min(0.05, (now - lastRef.current) / 1000) || 0;
     lastRef.current = now;
     step(dt); render(); syncHud();
@@ -247,14 +261,36 @@ const Survival = () => {
     }
   }, [step, render, syncHud]);
 
+  const resume = useCallback(() => {
+    const g = gs.current;
+    if (!g || !g.paused) return;
+    g.paused = false;
+    setPaused(false);
+    controls.lock();                 // re-acquire pointer lock from this click
+    lastRef.current = performance.now();
+    rafRef.current = requestAnimationFrame(loop);
+  }, [controls, loop]);
+
+  const quit = useCallback(() => {
+    const g = gs.current;
+    if (!g) return;
+    g.paused = false;
+    g.phase = 'idle';
+    setPaused(false);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    render();
+    syncHud();
+  }, [render, syncHud]);
+
   const startGame = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    setPaused(false);
     gs.current = {
       phase: 'playing', player: { x: 1.5, y: 1.5, angle: 0 }, enemies: [],
       score: 0, health: CFG.maxHealth, ammo: CFG.magSize, reserve: CFG.reserveStart,
       kills: 0, totalKills: 0, wave: 0, waveTotal: 0,
       shootCooldown: 0, flashTimer: 0, dmgTimer: 0, hitMarker: 0, reloadTimer: 0,
-      touch: false, flow: map.computeFlow(1.5, 1.5), flowCell: -1, banner: null,
+      touch: false, paused: false, flow: map.computeFlow(1.5, 1.5), flowCell: -1, banner: null,
     };
     spawnWave(gs.current, 0);
     syncHud();
@@ -298,12 +334,15 @@ const Survival = () => {
       </div>
 
       <div style={{ textAlign: 'center' }}>
-        <canvas
-          ref={canvasRef} width={SW} height={SH}
-          onPointerDown={onCanvasPointerDown}
-          onContextMenu={(e) => e.preventDefault()}
-          style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
-        />
+        <CanvasStage>
+          <canvas
+            ref={canvasRef} width={SW} height={SH}
+            onPointerDown={onCanvasPointerDown}
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
+          />
+          {paused && <PauseOverlay onResume={resume} onQuit={quit} quitLabel="END" />}
+        </CanvasStage>
       </div>
 
       {phase !== 'playing' && (

@@ -6,6 +6,7 @@ import {
   makeCamera, clearScreen, renderWorld, projectPoint, drawClipped, drawOrb,
   drawCrosshair, drawMuzzle, drawTitle, drawEndOverlay,
 } from '../engine/render';
+import { PauseOverlay, CanvasStage } from './PauseOverlay';
 
 const map = aimMap;
 const CENTER = { x: 6.5, y: 4.5 };
@@ -29,6 +30,7 @@ const AimTrainer = () => {
   const [drill, setDrill] = useState('flick');
   const [hud, setHud] = useState({ phase: 'idle', time: ROUND_TIME, hits: 0, shots: 0, combo: 0 });
   const [result, setResult] = useState(null);
+  const [paused, setPaused] = useState(false);
   const [best, setBest] = useState(() => {
     try { return JSON.parse(localStorage.getItem(BEST_KEY)) || {}; } catch { return {}; }
   });
@@ -106,7 +108,19 @@ const AimTrainer = () => {
     }
   }, [drill]);
 
-  const controls = useControls({ canvasRef, isActive: () => gs.current?.phase === 'playing' });
+  const pause = useCallback(() => {
+    const g = gs.current;
+    if (!g || g.phase !== 'playing' || g.paused) return;
+    g.paused = true;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    setPaused(true);
+  }, []);
+
+  const controls = useControls({
+    canvasRef,
+    isActive: () => gs.current?.phase === 'playing' && !gs.current?.paused,
+    onPause: pause,
+  });
 
   const shoot = useCallback(() => {
     const g = gs.current;
@@ -176,7 +190,7 @@ const AimTrainer = () => {
 
   const loop = useCallback((now) => {
     const g = gs.current;
-    if (!g || g.phase !== 'playing') return;
+    if (!g || g.phase !== 'playing' || g.paused) return;
     const dt = Math.min(0.05, (now - lastRef.current) / 1000) || 0;
     lastRef.current = now;
     step(dt); render(); syncHud();
@@ -188,9 +202,31 @@ const AimTrainer = () => {
     }
   }, [step, render, syncHud]);
 
+  const resume = useCallback(() => {
+    const g = gs.current;
+    if (!g || !g.paused) return;
+    g.paused = false;
+    setPaused(false);
+    controls.lock();
+    lastRef.current = performance.now();
+    rafRef.current = requestAnimationFrame(loop);
+  }, [controls, loop]);
+
+  const quit = useCallback(() => {
+    const g = gs.current;
+    if (!g) return;
+    g.paused = false;
+    g.phase = 'idle';
+    setPaused(false);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    render();
+    syncHud();
+  }, [render, syncHud]);
+
   const startGame = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     setResult(null);
+    setPaused(false);
     gs.current = {
       phase: 'playing', drill,
       player: { x: CENTER.x, y: CENTER.y, angle: -Math.PI / 2 },
@@ -199,7 +235,7 @@ const AimTrainer = () => {
       time: ROUND_TIME, elapsed: 0,
       hits: 0, shots: 0, combo: 0, bestCombo: 0,
       reactSum: 0, reactN: 0, avgReact: 0,
-      shootCooldown: 0, flashTimer: 0, hitMarker: 0,
+      shootCooldown: 0, flashTimer: 0, hitMarker: 0, paused: false,
     };
     while (gs.current.targets.length < DRILLS[drill].live) gs.current.targets.push(spawnTarget(gs.current));
     syncHud();
@@ -257,12 +293,15 @@ const AimTrainer = () => {
       </div>
 
       <div style={{ textAlign: 'center' }}>
-        <canvas
-          ref={canvasRef} width={SW} height={SH}
-          onPointerDown={onCanvasPointerDown}
-          onContextMenu={(e) => e.preventDefault()}
-          style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
-        />
+        <CanvasStage>
+          <canvas
+            ref={canvasRef} width={SW} height={SH}
+            onPointerDown={onCanvasPointerDown}
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
+          />
+          {paused && <PauseOverlay onResume={resume} onQuit={quit} quitLabel="END" />}
+        </CanvasStage>
       </div>
 
       {!playing && (

@@ -7,6 +7,7 @@ import {
   drawCrosshair, drawMuzzle, drawVignette, drawMinimap, drawHpBar, drawAmmo, drawEndOverlay,
 } from '../engine/render';
 import { TouchPad } from './touch';
+import { PauseOverlay, CanvasStage } from './PauseOverlay';
 
 // Shared duel presentation. Given a driver (local AI or networked lockstep),
 // runs a fixed-timestep loop, renders from the local player's camera and shows
@@ -18,7 +19,9 @@ const Duel = ({ makeDriver, statusText, hint, canRematch, onExit }) => {
   const rafRef = useRef(null);
   const lastRef = useRef(0);
   const accRef = useRef(0);
+  const pausedRef = useRef(false);
   const [hud, setHud] = useState({ myHp: 100, myScore: 0, foeScore: 0, weapon: 0, ammo: 0, reserve: 0, reloading: false, phase: 'countdown', countdown: 3, winner: -1, status: '' });
+  const [paused, setPaused] = useState(false);
 
   const syncHud = useCallback(() => {
     const drv = driverRef.current;
@@ -40,10 +43,23 @@ const Duel = ({ makeDriver, statusText, hint, canRematch, onExit }) => {
     });
   }, []);
 
+  // Esc drops pointer lock; that is our pause signal. No render() call needed —
+  // the canvas keeps its last frame under the overlay. (For online this stalls
+  // the opponent on "waiting" until you resume, which is the intended effect.)
+  const pause = useCallback(() => {
+    if (pausedRef.current) return;
+    const drv = driverRef.current;
+    if (!drv || drv.state.phase !== 'live') return;
+    pausedRef.current = true;
+    setPaused(true);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }, []);
+
   const controls = useControls({
     canvasRef,
     weaponCount: WEAPONS.length,
-    isActive: () => driverRef.current?.state.phase === 'live',
+    isActive: () => driverRef.current?.state.phase === 'live' && !pausedRef.current,
+    onPause: pause,
   });
 
   const render = useCallback(() => {
@@ -128,7 +144,7 @@ const Duel = ({ makeDriver, statusText, hint, canRematch, onExit }) => {
 
   const loop = useCallback((now) => {
     const drv = driverRef.current;
-    if (!drv) return;
+    if (!drv || pausedRef.current) return;
     const dt = Math.min(0.25, (now - lastRef.current) / 1000) || 0;
     lastRef.current = now;
     accRef.current += dt;
@@ -153,6 +169,22 @@ const Duel = ({ makeDriver, statusText, hint, canRematch, onExit }) => {
     syncHud();
     rafRef.current = requestAnimationFrame(loop);
   }, [makeDriver, sampleLocal, loop, syncHud]);
+
+  const resume = useCallback(() => {
+    if (!pausedRef.current) return;
+    pausedRef.current = false;
+    setPaused(false);
+    controls.lock();
+    lastRef.current = performance.now();
+    accRef.current = 0;
+    rafRef.current = requestAnimationFrame(loop);
+  }, [controls, loop]);
+
+  const quit = useCallback(() => {
+    pausedRef.current = false;
+    setPaused(false);
+    onExit?.();
+  }, [onExit]);
 
   useEffect(() => {
     start();
@@ -182,14 +214,17 @@ const Duel = ({ makeDriver, statusText, hint, canRematch, onExit }) => {
       </div>
 
       <div style={{ textAlign: 'center' }}>
-        <canvas
-          ref={canvasRef} width={SW} height={SH}
-          onPointerDown={onCanvasPointerDown}
-          onPointerUp={onCanvasPointerUp}
-          onPointerLeave={onCanvasPointerUp}
-          onContextMenu={(e) => e.preventDefault()}
-          style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
-        />
+        <CanvasStage>
+          <canvas
+            ref={canvasRef} width={SW} height={SH}
+            onPointerDown={onCanvasPointerDown}
+            onPointerUp={onCanvasPointerUp}
+            onPointerLeave={onCanvasPointerUp}
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ border: '1px solid var(--border-color)', borderRadius: '4px', maxWidth: '100%', display: 'block', margin: '0 auto', cursor: 'crosshair', touchAction: 'none' }}
+          />
+          {paused && <PauseOverlay onResume={resume} onQuit={quit} quitLabel="MENU" />}
+        </CanvasStage>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '0.6rem', marginTop: '1.2rem', flexWrap: 'wrap' }}>
