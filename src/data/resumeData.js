@@ -155,15 +155,29 @@ export const projects = [
   }
 ];
 
-// Public writing. `views` is maintained by hand — HackMD exposes no public
-// stats API — so treat it as a rounded floor rather than a live number.
+// Public writing. `views` is maintained by hand: HackMD has no stats API, but
+// https://hackmd.io/<note-id>/info returns a public JSON blob with `viewcount`
+// — read it from there and round down when refreshing these numbers.
 export const writings = [
+  {
+    title: "Nano5 使用筆記",
+    subtitle: "NCHC Nano5 HPC Field Notes",
+    platform: "HackMD",
+    url: "https://hackmd.io/mlwhc95MS_iJ-g3-tIZMEQ?view",
+    description:
+      "在國網中心 Nano5 叢集上跑實驗的操作筆記：從 2FA 登入、conda 環境、sbatch 樣板到 PyTorch/CUDA 版本排錯，把踩過的坑寫成可以直接照抄的流程。",
+    topics: [
+      "登入與 2FA", "登入節點鐵則", "Conda 環境", "sbatch 樣板",
+      "Slurm 常用指令", "SFTP 傳檔", "Git SSH 設定",
+      "Hugging Face 登入", "PyTorch / CUDA 相容性", "錯誤排查表"
+    ]
+  },
   {
     title: "經典邏輯題",
     subtitle: "Classic Logic Puzzles",
     platform: "HackMD",
     url: "https://hackmd.io/@BeanSamuel/S1-vxjfXp",
-    views: "10,000+",
+    views: "24,000+",
     description:
       "12 道經典邏輯謎題的完整拆解，從海盜分金幣、囚犯帽子到生死抉擇。每題先給題目，答案收在 spoiler 裡，讀者可以先想過再展開推理過程。",
     topics: [
