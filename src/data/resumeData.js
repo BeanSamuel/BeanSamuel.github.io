@@ -31,13 +31,23 @@ export const education = [
 
 export const experience = [
   {
-    title: "Research Intern — 資訊科技創新研究中心 (IIS)",
-    company: "Academia Sinica",
-    period: "July 2025 – Present",
+    title: "Programming Instructor",
+    company: "Telearn",
+    period: "June 2022 – Present",
     description: [
-      "Investigating cross-modal alignments of large pre-trained models for representation and semantic enhancement",
-      "Researching methods to measure semantic understanding across modalities in LLMs",
-      "Co-authoring paper: \"Do Latent Space Similarities Reflect Semantic Relatedness?\" (under submission)"
+      "Teaching programming from elementary through high school level — Scratch, Python, and C/C++",
+      "Coaching APCS preparation and algorithmic problem solving: data structures, algorithms, and contest-style practice",
+      "Mentoring students one-on-one for programming contests and ITS certification"
+    ]
+  },
+  {
+    title: "Research Intern — 資訊科技創新研究中心 (資創中心 / CITI)",
+    company: "Academia Sinica",
+    period: "July 2025 – Aug 2026",
+    description: [
+      "Investigated cross-modal alignments of large pre-trained models for representation and semantic enhancement",
+      "Researched methods to measure semantic understanding across modalities in LLMs",
+      "Co-authored paper: \"Do Latent Space Similarities Reflect Semantic Relatedness?\" — presented as a poster at TAAI 2025"
     ]
   },
   {
@@ -64,7 +74,7 @@ export const publications = [
     title: "Do Latent Space Similarities Reflect Semantic Relatedness? Cross-Modal Alignments of Large Pre-Trained Models",
     authors: "Chao, C.-H., Zezario, R. E., & Tsao, Y.",
     year: 2025,
-    venue: "Under Submission — National Central University & Academia Sinica"
+    venue: "TAAI 2025 — Poster Session"
   },
   {
     title: "BoostTrack-enabled YOLOv5-nano Edge Vision for Enhanced Situational Awareness in Fire Scenarios Within Smart Living Environments",
