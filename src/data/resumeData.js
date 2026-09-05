@@ -7,12 +7,25 @@ export const personalInfo = {
   role: "NLP Researcher | Backend Developer",
 };
 
+// Newest first — Experience.jsx renders this order as-is.
 export const education = [
+  {
+    institution: "國立臺灣大學 (National Taiwan University)",
+    department: "電機工程學研究所 (Graduate Institute of Electrical Engineering)",
+    period: "Sept 2026 – Present",
+    details: "M.S. student"
+  },
   {
     institution: "國立中央大學 (National Central University)",
     department: "資訊工程學系 (Computer Science and Information Engineering)",
-    period: "Sept 2022 – Present",
+    period: "Sept 2022 – June 2026",
     details: "GPA 4.09 / 4.3  ·  Dept. Rank 35 / 113  ·  CPE 6 / 7 Problems Solved  ·  1132 書卷獎"
+  },
+  {
+    institution: "臺北市私立靜心高級中學 (Jing Shin High School)",
+    department: "普通科 (General Studies)",
+    period: "Sept 2019 – June 2022",
+    details: "高中即參與 NLP 研究（指導：蔡宗翰教授）  ·  發表 ROCLING 2021 / TAAI 2021 對話行為嵌入研究"
   }
 ];
 
@@ -75,6 +88,7 @@ export const publications = [
 ];
 
 export const awards = [
+  { title: "雙北程式設計節 — 城市儀表板大黑客松 第三名 (3rd Place)", year: "2026" },
   { title: "ICPC Asia Taichung Regional Programming Contest — 銅牌 (Bronze Medal)", year: "2025" },
   { title: "ICPC Asia Taiwan Online Programming Contest — 銀牌 (Silver Medal)", year: "2025" },
   { title: "國立中央大學 1132 學期書卷獎 (Academic Excellence Award)", year: "2025" },

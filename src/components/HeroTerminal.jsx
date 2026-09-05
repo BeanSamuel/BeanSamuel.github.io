@@ -6,7 +6,7 @@ const LINES = [
   { kind: 'cmd', text: 'whoami' },
   {
     kind: 'out',
-    text: `${personalInfo.name} (${personalInfo.chineseName}) — CS undergrad at National Central University.`,
+    text: `${personalInfo.name} (${personalInfo.chineseName}) — EE grad student at National Taiwan University.`,
   },
   { kind: 'cmd', text: 'cat about.txt' },
   {
