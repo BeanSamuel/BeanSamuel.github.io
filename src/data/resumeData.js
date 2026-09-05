@@ -123,6 +123,7 @@ export const awards = [
   { title: "國立中央大學 1132 學期書卷獎 (Academic Excellence Award)", year: "2025", image: "/awards/2025-ncu-academic-excellence-1132.jpg" },
   { title: "113學年度資電院大學部專題競賽 佳作", year: "2025", image: "/awards/2025-ncu-eecs-project.jpg" },
   { title: "113學年度資工系大學部專題實驗競賽 佳作、人氣獎", year: "2025", image: "/awards/2025-ncu-csie-project.jpg" },
+  { title: "ICPC Asia Taichung Regional Programming Contest — 銅牌 (Bronze Award)", year: "2024", image: "/awards/2024-icpc-taichung-bronze.jpg" },
   { title: "AICUP 2024 玉山人工智慧挑戰賽 RAG × LLM 金融問答 — TOP 4.7% (487 teams)", year: "2024", image: "/awards/2024-aicup-esun-rag-llm.jpg" },
   { title: "未來網路應用創意競賽 銅牌 (Bronze Medal)", year: "2024", image: "/awards/2024-future-network-bronze.jpg" },
   { title: "全國大專電腦軟體設計競賽 佳作", year: "2023", image: "/awards/2023-national-software-design.jpg" },

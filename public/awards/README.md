@@ -8,14 +8,16 @@
 | 檔名 | 對應項目 | 區塊 | 狀態 |
 | --- | --- | --- | --- |
 | `2026-city-dashboard-hackathon-3rd.jpg` | 雙北程式設計節 — 城市儀表板大黑客松 第三名 | 獎項 | ⬜️ |
-| `2025-icpc-taichung-bronze.jpg` | ICPC Asia Taichung Regional — 銅牌 | 獎項 | ✅ |
-| `2025-icpc-taiwan-online-silver.jpg` | ICPC Asia Taiwan Online — 銀牌 | 獎項 | ⬜️ |
+| `2025-icpc-taichung-bronze.jpg` | ICPC Asia Taichung Regional 2025 — 銅牌 | 獎項 | ✅ |
+| `2025-icpc-taiwan-online-silver.jpg` | ICPC Asia Taiwan Online 2025 — 銀牌 | 獎項 | ✅ |
 | `2025-ncu-academic-excellence-1132.jpg` | 中央大學 1132 學期書卷獎 | 獎項 | ⬜️ |
 | `2025-ncu-eecs-project.jpg` | 113 學年度資電院大學部專題競賽 佳作 | 獎項 | ✅ |
 | `2025-ncu-csie-project.jpg` | 113 學年度資工系大學部專題實驗競賽 佳作、人氣獎 | 獎項 | ✅ ⚠️ 低解析 305px |
+| `2024-icpc-taichung-bronze.jpg` | ICPC Asia Taichung Regional 2024 — 銅牌 | 獎項 | ✅ |
 | `2024-aicup-esun-rag-llm.jpg` | AICUP 2024 玉山人工智慧挑戰賽 | 獎項 | ✅ |
 | `2024-future-network-bronze.jpg` | 未來網路應用創意競賽 — 銅牌 | 獎項 | ✅ |
-| `2023-national-software-design.jpg` | 全國大專電腦軟體設計競賽 佳作 | 獎項 | ✅ ⚠️ 低解析 540px |
+| `2023-national-software-design.jpg` | 全國大專電腦軟體設計競賽 佳作（教育部獎狀） | 獎項 | ✅ |
+| `2022-ncu-swimming-3rd.jpg` | 中央 111 學年度全校運動會 50 公尺仰式 第三名 | 獎項 | ✅ |
 | `2021-vex-inspire-award.jpg` | VEX Inspire Award、全國技能挑戰賽 第 9 名 | 獎項 | ✅ ⚠️ 低解析 265px |
 | `2024-quanta-cup-coaching.jpg` | 廣達游智盃 — 指導參賽證明（五常國小） | 教學 | ✅ |
 | `2023-jingshin-alumni-talk.jpg` | 靜心高中 — 校友生涯分享 感謝狀 | 教學 | ✅ |
