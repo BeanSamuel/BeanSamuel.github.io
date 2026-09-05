@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 .claude/*
+# 獎狀原始檔（含個資，不進 git；只有轉檔後的 public/awards/*.jpg 會發布）
+awards-src/

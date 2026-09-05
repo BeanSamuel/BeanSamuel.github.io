@@ -73,23 +73,6 @@ export const PublicationList = ({ data }) => (
   </div>
 );
 
-export const GeneralList = ({ data }) => (
-  <div>
-    <ul style={{ listStyleType: 'square', paddingLeft: '1.5rem' }}>
-      {data.map((item, idx) => (
-        <li key={idx} style={{ marginBottom: '1rem', color: 'var(--text-main)' }}>
-          <span style={{ color: '#fff', fontWeight: '500' }}>{item.title || item.name}</span>
-          {(item.year || item.tag) && (
-             <span style={{ color: 'var(--accent-primary)', marginLeft: '1rem', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}>
-               [{item.year || item.tag}]
-             </span>
-          )}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
 export const WritingList = ({ data }) => (
   <div>
     {data.map((item, idx) => (

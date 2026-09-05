@@ -2,6 +2,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { personalInfo, abilities } from '../data/resumeData';
 import SectionViewer from '../components/SectionViewer';
 import HeroTerminal from '../components/HeroTerminal';
+import RotatingAvatar from '../components/RotatingAvatar';
 import useReducedMotion from '../hooks/useReducedMotion';
 import { FaGithub, FaEnvelope } from 'react-icons/fa';
 
@@ -25,20 +26,7 @@ const Home = () => {
         margin: '1rem 0 3rem 0',
         flexWrap: 'wrap',
       }}>
-        <img
-          src="/avatar.png"
-          alt=""
-          width="112"
-          height="112"
-          style={{
-            width: '112px',
-            height: '112px',
-            borderRadius: '50%',
-            objectFit: 'cover',
-            border: '1px solid var(--border-strong)',
-            flexShrink: 0,
-          }}
-        />
+        <RotatingAvatar size={112} />
 
         <div style={{ flex: 1, minWidth: '260px' }}>
           <h1>{personalInfo.name}</h1>

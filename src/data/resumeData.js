@@ -97,17 +97,37 @@ export const publications = [
   }
 ];
 
+// Teaching and outreach: certificates that recognise instruction or a talk
+// rather than a contest result, so they stay out of `awards`. The 五常國小
+// coaching role was a Telearn school placement, not a separate job.
+export const outreach = [
+  {
+    title: "廣達游智盃創意程式競賽 — 指導參賽證明（臺北市五常國小）",
+    year: "2024",
+    image: "/awards/2024-quanta-cup-coaching.jpg"
+  },
+  {
+    title: "臺北市私立靜心高級中學 — 校友生涯分享 感謝狀",
+    year: "2023",
+    image: "/awards/2023-jingshin-alumni-talk.jpg"
+  }
+];
+
+// Certificate scans live in public/awards/ and are wired here by path.
+// A missing file is not an error: the viewer says so rather than showing
+// a broken image, so paths can be filled in ahead of the scans.
 export const awards = [
-  { title: "雙北程式設計節 — 城市儀表板大黑客松 第三名 (3rd Place)", year: "2026" },
-  { title: "ICPC Asia Taichung Regional Programming Contest — 銅牌 (Bronze Medal)", year: "2025" },
-  { title: "ICPC Asia Taiwan Online Programming Contest — 銀牌 (Silver Medal)", year: "2025" },
-  { title: "國立中央大學 1132 學期書卷獎 (Academic Excellence Award)", year: "2025" },
-  { title: "113學年度資電院大學部專題競賽 佳作", year: "2025" },
-  { title: "113學年度資工系大學部專題實驗競賽 佳作、人氣獎", year: "2025" },
-  { title: "AICUP 2024 玉山人工智慧挑戰賽 RAG × LLM 金融問答 — TOP 4.7% (487 teams)", year: "2024" },
-  { title: "未來網路應用創意競賽 銅牌 (Bronze Medal)", year: "2024" },
-  { title: "全國大專電腦軟體設計競賽 佳作", year: "2023" },
-  { title: "VEX 機器人競賽 全國技能挑戰賽 第 9 名", year: "2020" }
+  { title: "雙北程式設計節 — 城市儀表板大黑客松 第三名 (3rd Place)", year: "2026", image: "/awards/2026-city-dashboard-hackathon-3rd.jpg" },
+  { title: "ICPC Asia Taichung Regional Programming Contest — 銅牌 (Bronze Medal)", year: "2025", image: "/awards/2025-icpc-taichung-bronze.jpg" },
+  { title: "ICPC Asia Taiwan Online Programming Contest — 銀牌 (Silver Medal)", year: "2025", image: "/awards/2025-icpc-taiwan-online-silver.jpg" },
+  { title: "國立中央大學 1132 學期書卷獎 (Academic Excellence Award)", year: "2025", image: "/awards/2025-ncu-academic-excellence-1132.jpg" },
+  { title: "113學年度資電院大學部專題競賽 佳作", year: "2025", image: "/awards/2025-ncu-eecs-project.jpg" },
+  { title: "113學年度資工系大學部專題實驗競賽 佳作、人氣獎", year: "2025", image: "/awards/2025-ncu-csie-project.jpg" },
+  { title: "AICUP 2024 玉山人工智慧挑戰賽 RAG × LLM 金融問答 — TOP 4.7% (487 teams)", year: "2024", image: "/awards/2024-aicup-esun-rag-llm.jpg" },
+  { title: "未來網路應用創意競賽 銅牌 (Bronze Medal)", year: "2024", image: "/awards/2024-future-network-bronze.jpg" },
+  { title: "全國大專電腦軟體設計競賽 佳作", year: "2023", image: "/awards/2023-national-software-design.jpg" },
+  { title: "國立中央大學 111 學年度全校運動會 50 公尺仰式 第三名", year: "2022", image: "/awards/2022-ncu-swimming-3rd.jpg" },
+  { title: "VEX Robotics Competition — Inspire Award、全國技能挑戰賽 第 9 名 (TEAM 76525A 靜心高中)", year: "2021", image: "/awards/2021-vex-inspire-award.jpg" }
 ];
 
 // Contest results shown on the Competitive Programming page, alongside the

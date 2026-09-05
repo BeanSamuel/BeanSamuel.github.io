@@ -1,6 +1,7 @@
 import SectionViewer from '../components/SectionViewer';
-import { ExperienceList, EducationList, GeneralList } from '../components/Lists';
-import { experience, education, awards } from '../data/resumeData';
+import { ExperienceList, EducationList } from '../components/Lists';
+import CertificateList from '../components/CertificateList';
+import { experience, education, awards, outreach } from '../data/resumeData';
 
 const Experience = () => {
   return (
@@ -13,8 +14,12 @@ const Experience = () => {
         <EducationList data={education} />
       </SectionViewer>
 
+      <SectionViewer title="Teaching & Outreach">
+        <CertificateList data={outreach} label="證書" />
+      </SectionViewer>
+
       <SectionViewer title="Honors & Awards">
-        <GeneralList data={awards} />
+        <CertificateList data={awards} />
       </SectionViewer>
     </div>
   );
