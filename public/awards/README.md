@@ -11,7 +11,7 @@
 | `2025-national-software-design-4th.jpg` | 全國大專電腦軟體設計競賽 第四名（教育部獎狀） | 獎項 | ✅ |
 | `2025-icpc-taichung-bronze.jpg` | ICPC Asia Taichung Regional 2025 — 銅牌 | 獎項 | ✅ |
 | `2025-icpc-taiwan-online-silver.jpg` | ICPC Asia Taiwan Online 2025 — 銀牌 | 獎項 | ✅ |
-| `2025-ncu-academic-excellence-1132.jpg` | 中央大學 1132 學期書卷獎 | 獎項 | ⬜️ |
+| `2025-ncu-academic-excellence-1132.jpg` | 中央大學 1132 學期書卷獎 | 獎項 | ✅ |
 | `2025-ncu-eecs-project.jpg` | 113 學年度資電院大學部專題競賽 佳作 | 獎項 | ✅ |
 | `2025-ncu-csie-project.jpg` | 113 學年度資工系大學部專題實驗競賽 佳作、人氣獎 | 獎項 | ✅ ⚠️ 低解析 305px |
 | `2024-icpc-taichung-bronze.jpg` | ICPC Asia Taichung Regional 2024 — 銅牌 | 獎項 | ✅ |
