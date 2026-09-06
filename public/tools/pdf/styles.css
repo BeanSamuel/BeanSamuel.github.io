@@ -132,6 +132,29 @@ svg {
   gap: 0.5rem;
 }
 
+/* Back to the tools index. The other tools put this above their hero; this
+   one is an app shell, so it rides in the topbar ahead of the brand. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: var(--text-dim);
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+}
+.back-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+@media (max-width: 720px) {
+  .back-link-label {
+    display: none;
+  }
+}
+
 .brand {
   display: flex;
   align-items: baseline;
