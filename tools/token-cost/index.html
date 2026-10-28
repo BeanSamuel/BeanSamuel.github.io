@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d10" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+
+    <title>LLM Token Counter & Cost Estimator — Samuel Chao</title>
+    <meta name="author" content="Samuel Chao" />
+    <meta
+      name="description"
+      content="Estimate token usage and API cost across GPT and Claude models from a single prompt. Exact OpenAI token counts, editable prices, 100% client-side."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://beansamuel.github.io/tools/token-cost/" />
+    <meta property="og:title" content="LLM Token Counter & Cost Estimator — Samuel Chao" />
+    <meta
+      property="og:description"
+      content="Estimate token usage and API cost across GPT and Claude models from a single prompt. Editable prices, 100% client-side."
+    />
+    <meta property="og:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="LLM Token Counter & Cost Estimator — Samuel Chao" />
+    <meta
+      name="twitter:description"
+      content="Estimate token usage and API cost across GPT and Claude models from a single prompt."
+    />
+    <meta name="twitter:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+
+    <style>
+      :root {
+        --bg-color: #0b0d10;
+        --panel-bg: #12151a;
+        --panel-raised: #171b21;
+        --text-main: #d2d6dd;
+        --text-dim: #8a919e;
+        --text-faint: #5c636e;
+        --accent-primary: #57c9d6;
+        --accent-soft: rgba(87, 201, 214, 0.1);
+        --border-color: #232830;
+        --border-strong: #333a45;
+        --good: #27c93f;
+        --warn: #e0a458;
+        --font-cjk: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+          Consolas, var(--font-cjk);
+        --font-sans: 'IBM Plex Sans', system-ui, -apple-system, var(--font-cjk);
+        --ease: 180ms ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
+
+      a {
+        color: var(--accent-primary);
+        text-decoration: none;
+        transition: color var(--ease);
+      }
+      a:hover {
+        color: #9fe4ed;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2.25rem 1.5rem 4rem;
+        width: 100%;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .back-link:hover {
+        color: var(--accent-primary);
+      }
+
+      header.hero {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-primary);
+        margin-bottom: 0.6rem;
+      }
+      h1 {
+        font-size: 1.9rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #eef0f4;
+        line-height: 1.2;
+      }
+      .sub {
+        color: var(--text-dim);
+        margin-top: 0.5rem;
+        max-width: 64ch;
+        font-size: 0.98rem;
+      }
+
+      label.field-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin-bottom: 0.4rem;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 130px;
+        resize: vertical;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem 1.1rem;
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        transition: border-color var(--ease);
+        tab-size: 4;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+      }
+
+      /* ---- Controls row ---- */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 1rem 0 1.25rem;
+        align-items: flex-end;
+      }
+      .num-field {
+        display: flex;
+        flex-direction: column;
+      }
+      .num-field input {
+        width: 160px;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 0.5rem 0.7rem;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+      }
+      .num-field input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+      }
+
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        flex: 1 1 auto;
+      }
+      .stat {
+        display: flex;
+        flex-direction: column;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.85rem;
+        min-width: 80px;
+      }
+      .stat .num {
+        font-family: var(--font-mono);
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #eef0f4;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+      }
+      .stat .lbl {
+        font-family: var(--font-mono);
+        font-size: 0.64rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin-top: 2px;
+      }
+
+      /* ---- Table ---- */
+      .panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(0, 0, 0, 0.2);
+        flex-wrap: wrap;
+      }
+      .panel-head .title {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .head-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .btn {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--text-dim);
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        border-radius: 6px;
+        padding: 0.4rem 0.7rem;
+        cursor: pointer;
+        transition: border-color var(--ease), color var(--ease),
+          background-color var(--ease);
+        white-space: nowrap;
+      }
+      .btn:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+      }
+      .btn.done {
+        color: var(--good);
+        border-color: var(--good);
+        background: rgba(39, 201, 63, 0.08);
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+        min-width: 620px;
+      }
+      thead th {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        text-align: right;
+        padding: 0.7rem 0.9rem;
+        border-bottom: 1px solid var(--border-color);
+        white-space: nowrap;
+        font-weight: 500;
+      }
+      thead th.left {
+        text-align: left;
+      }
+      tbody td {
+        padding: 0.6rem 0.9rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .m-name {
+        text-align: left;
+        color: #eef0f4;
+        font-weight: 500;
+      }
+      .m-provider {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        color: var(--text-faint);
+        margin-top: 1px;
+        font-weight: 400;
+      }
+      td.tokens {
+        font-family: var(--font-mono);
+        color: var(--text-main);
+      }
+      .approx {
+        color: var(--warn);
+        cursor: help;
+      }
+      td.total {
+        font-family: var(--font-mono);
+        color: var(--accent-primary);
+        font-weight: 500;
+      }
+      .price-input {
+        width: 74px;
+        background: var(--bg-color);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        padding: 0.28rem 0.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        text-align: right;
+      }
+      .price-input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+      }
+
+      .disclaimer {
+        margin-top: 0.85rem;
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--text-faint);
+        line-height: 1.6;
+        max-width: 78ch;
+      }
+      .disclaimer b {
+        color: var(--warn);
+        font-weight: 500;
+      }
+      .status {
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--text-dim);
+      }
+
+      details.explainer {
+        margin-top: 1.75rem;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 0.25rem 1.1rem;
+      }
+      details.explainer summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 0.75rem 0;
+        font-weight: 500;
+        color: #eef0f4;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      details.explainer summary::-webkit-details-marker {
+        display: none;
+      }
+      details.explainer summary::before {
+        content: '＋';
+        font-family: var(--font-mono);
+        color: var(--accent-primary);
+      }
+      details.explainer[open] summary::before {
+        content: '－';
+      }
+      details.explainer .body {
+        padding: 0 0 1rem;
+        color: var(--text-dim);
+        font-size: 0.9rem;
+        max-width: 72ch;
+      }
+      details.explainer .body p {
+        margin-bottom: 0.7rem;
+      }
+      details.explainer code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+      }
+      details.explainer a {
+        border-bottom: 1px dotted currentColor;
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1rem;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1.5rem 1.1rem 3rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        .num-field input {
+          width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="back-link" href="../">&larr; Tools</a>
+
+      <header class="hero">
+        <div class="eyebrow">NLP · Cost</div>
+        <h1>LLM Token Counter &amp; Cost Estimator</h1>
+        <p class="sub">
+          Paste a prompt and see the token count and estimated API cost across
+          GPT and Claude models at once. OpenAI counts use the real tokenizer;
+          prices are editable so the numbers stay yours. Everything runs in your
+          browser.
+        </p>
+      </header>
+
+      <label class="field-label" for="input">Prompt / input text</label>
+      <textarea id="input" spellcheck="false" placeholder="Paste your prompt…"></textarea>
+
+      <div class="controls">
+        <div class="num-field">
+          <label class="field-label" for="outTokens">Expected output tokens</label>
+          <input id="outTokens" type="number" min="0" step="50" value="500" />
+        </div>
+        <div class="stats" id="stats">
+          <div class="stat"><span class="num" id="stChars">0</span><span class="lbl">Chars</span></div>
+          <div class="stat"><span class="num" id="stWords">0</span><span class="lbl">Words</span></div>
+          <div class="stat"><span class="num" id="stTokens">0</span><span class="lbl">≈ Tokens</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="title" id="tableStatus">Cost across models · per request</span>
+          <div class="head-actions">
+            <button class="btn" id="resetPrices" type="button">↺ Reset prices</button>
+            <button class="btn" id="copyCsv" type="button">⧉ Copy CSV</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="left">Model</th>
+                <th>Input tokens</th>
+                <th>Input $/1M</th>
+                <th>Output $/1M</th>
+                <th>Est. total</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Prices are starting estimates as of <span id="asOf"></span> — Anthropic
+        list prices and typical OpenAI prices per 1M tokens. <b>Verify against
+        each provider and edit any cell inline</b> — your edits drive the totals.
+        Rows marked <span class="approx">≈</span> are non-OpenAI models counted
+        with OpenAI's tokenizer as a proxy; their real token counts typically run
+        ~15–20% higher, so treat those costs as ballpark.
+      </p>
+
+      <details class="explainer">
+        <summary>How this works &amp; what to trust</summary>
+        <div class="body">
+          <p>
+            <b style="color:#eef0f4">Token counts.</b> OpenAI models
+            (GPT-4o, GPT-4.1, o-series, GPT-4, GPT-3.5) are tokenized with the
+            exact Byte-Pair Encoding they use in production
+            (<code>o200k_base</code> / <code>cl100k_base</code> via
+            <code>gpt-tokenizer</code>), so those counts are precise. Claude and
+            other non-OpenAI models don't ship a browser tokenizer, so they're
+            approximated with <code>o200k_base</code> and flagged
+            <span class="approx">≈</span>. For exact Claude counts, use
+            Anthropic's <code>count_tokens</code> API.
+          </p>
+          <p>
+            <b style="color:#eef0f4">Cost.</b> Estimated total =
+            (input&nbsp;tokens ÷ 1M × input price) + (expected output tokens ÷ 1M
+            × output price). Set the two prices per model and the expected output
+            length; the table recomputes live. Nothing is sent anywhere — no API
+            key, no network calls beyond loading the tokenizer library once.
+          </p>
+        </div>
+      </details>
+
+      <footer>
+        <span>Tokenizers via gpt-tokenizer (pure JS) · prices editable · all client-side.</span>
+        <span><a href="../../">beansamuel.github.io</a></span>
+      </footer>
+    </div>
+
+    <script type="module">
+      const CDN = 'https://esm.sh/gpt-tokenizer@3.4.0/encoding/';
+      const PRICES_AS_OF = 'Jun 2026';
+
+      // ---- Model catalog: add a model by appending ONE object. ----
+      // enc: which gpt-tokenizer encoding to count with.
+      //   OpenAI models use their real encoding (exact).
+      //   approx:true marks non-OpenAI models counted with o200k as a proxy.
+      // inPrice / outPrice: USD per 1M tokens (editable in the table).
+      const MODELS = [
+        { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', enc: 'o200k_base', inPrice: 2.5, outPrice: 10 },
+        { id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'OpenAI', enc: 'o200k_base', inPrice: 0.15, outPrice: 0.6 },
+        { id: 'gpt-4.1', name: 'GPT-4.1', provider: 'OpenAI', enc: 'o200k_base', inPrice: 2, outPrice: 8 },
+        { id: 'gpt-4.1-mini', name: 'GPT-4.1 mini', provider: 'OpenAI', enc: 'o200k_base', inPrice: 0.4, outPrice: 1.6 },
+        { id: 'o3', name: 'o3', provider: 'OpenAI · o-series', enc: 'o200k_base', inPrice: 2, outPrice: 8 },
+        { id: 'gpt-4-turbo', name: 'GPT-4 Turbo', provider: 'OpenAI', enc: 'cl100k_base', inPrice: 10, outPrice: 30 },
+        { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo', provider: 'OpenAI', enc: 'cl100k_base', inPrice: 0.5, outPrice: 1.5 },
+        { id: 'claude-opus-4-8', name: 'Claude Opus 4.8', provider: 'Anthropic', enc: 'o200k_base', approx: true, inPrice: 5, outPrice: 25 },
+        { id: 'claude-sonnet-5', name: 'Claude Sonnet 5', provider: 'Anthropic', enc: 'o200k_base', approx: true, inPrice: 3, outPrice: 15 },
+        { id: 'claude-haiku-4-5', name: 'Claude Haiku 4.5', provider: 'Anthropic', enc: 'o200k_base', approx: true, inPrice: 1, outPrice: 5 },
+      ];
+
+      const SAMPLE = `You are a senior backend engineer. Review the following function for correctness, edge cases, and time complexity, then suggest a cleaner implementation.
+
+def two_sum(nums, target):
+    seen = {}
+    for i, n in enumerate(nums):
+        if target - n in seen:
+            return [seen[target - n], i]
+        seen[n] = i
+    return []
+
+Explain your reasoning briefly, then give the improved version with comments.`;
+
+      const $ = (id) => document.getElementById(id);
+      const inputEl = $('input');
+      const outTokensEl = $('outTokens');
+      const tbody = $('tbody');
+      const tableStatus = $('tableStatus');
+
+      const modCache = {};
+      const counts = {}; // encoding name -> token count for current text
+      let outputTokens = 500;
+
+      // Distinct encodings referenced by the catalog — load these lazily once.
+      const NEEDED = [...new Set(MODELS.map((m) => m.enc))];
+
+      $('asOf').textContent = PRICES_AS_OF;
+
+      async function getEnc(name) {
+        if (modCache[name]) return modCache[name];
+        const mod = await import(/* @vite-ignore */ CDN + name);
+        modCache[name] = mod;
+        return mod;
+      }
+
+      const fmtInt = (n) => n.toLocaleString('en-US');
+      function fmtUSD(n) {
+        if (!isFinite(n)) return '—';
+        if (n === 0) return '$0';
+        if (n >= 1) return '$' + n.toFixed(2);
+        if (n >= 0.01) return '$' + n.toFixed(4);
+        return '$' + n.toPrecision(2);
+      }
+
+      // ---- Build the table once; keep references for live updates ----
+      function buildTable() {
+        MODELS.forEach((m) => {
+          const tr = document.createElement('tr');
+
+          const nameTd = document.createElement('td');
+          nameTd.className = 'm-name';
+          nameTd.innerHTML = `${m.name}<span class="m-provider">${m.provider}</span>`;
+
+          const tokTd = document.createElement('td');
+          tokTd.className = 'tokens';
+
+          const inTd = document.createElement('td');
+          const inInput = document.createElement('input');
+          inInput.type = 'number';
+          inInput.min = '0';
+          inInput.step = '0.01';
+          inInput.className = 'price-input';
+          inInput.value = String(m.inPrice);
+          inInput.setAttribute('aria-label', `${m.name} input price per 1M`);
+          inTd.appendChild(inInput);
+
+          const outTd = document.createElement('td');
+          const outInput = document.createElement('input');
+          outInput.type = 'number';
+          outInput.min = '0';
+          outInput.step = '0.01';
+          outInput.className = 'price-input';
+          outInput.value = String(m.outPrice);
+          outInput.setAttribute('aria-label', `${m.name} output price per 1M`);
+          outTd.appendChild(outInput);
+
+          const totalTd = document.createElement('td');
+          totalTd.className = 'total';
+
+          tr.append(nameTd, tokTd, inTd, outTd, totalTd);
+          tbody.appendChild(tr);
+
+          m._els = { tokTd, inInput, outInput, totalTd };
+          inInput.addEventListener('input', () => updateRow(m));
+          outInput.addEventListener('input', () => updateRow(m));
+        });
+      }
+
+      function updateRow(m) {
+        const els = m._els;
+        const tokens = counts[m.enc] ?? 0;
+        els.tokTd.innerHTML = m.approx
+          ? `<span class="approx" title="Approximate — counted with OpenAI's tokenizer; real count may be ~15–20% higher">≈ ${fmtInt(
+              tokens
+            )}</span>`
+          : fmtInt(tokens);
+        const inP = parseFloat(els.inInput.value) || 0;
+        const outP = parseFloat(els.outInput.value) || 0;
+        const total = (tokens / 1e6) * inP + (outputTokens / 1e6) * outP;
+        els.totalTd.textContent = fmtUSD(total);
+      }
+
+      function updateAllRows() {
+        MODELS.forEach(updateRow);
+      }
+
+      // ---- Recount tokens for the current text across needed encodings ----
+      function recount() {
+        const text = inputEl.value;
+        NEEDED.forEach((name) => {
+          const mod = modCache[name];
+          if (mod) counts[name] = mod.encode(text).length;
+        });
+        // Stats bar
+        $('stChars').textContent = fmtInt([...text].length);
+        $('stWords').textContent = fmtInt(
+          text.trim() ? text.trim().split(/\s+/).length : 0
+        );
+        $('stTokens').textContent = fmtInt(counts['o200k_base'] ?? 0);
+        updateAllRows();
+      }
+
+      let debounceTimer = null;
+      inputEl.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(recount, 150);
+      });
+      outTokensEl.addEventListener('input', () => {
+        outputTokens = Math.max(0, parseInt(outTokensEl.value, 10) || 0);
+        updateAllRows();
+      });
+
+      // ---- Reset prices to catalog defaults ----
+      $('resetPrices').addEventListener('click', () => {
+        MODELS.forEach((m) => {
+          m._els.inInput.value = String(m.inPrice);
+          m._els.outInput.value = String(m.outPrice);
+        });
+        updateAllRows();
+      });
+
+      // ---- Copy comparison as CSV ----
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            return ok;
+          } catch (__) {
+            return false;
+          }
+        }
+      }
+      $('copyCsv').addEventListener('click', async () => {
+        const rows = [['model', 'provider', 'input_tokens', 'output_tokens', 'input_$/1M', 'output_$/1M', 'est_total_$']];
+        MODELS.forEach((m) => {
+          const tokens = counts[m.enc] ?? 0;
+          const inP = parseFloat(m._els.inInput.value) || 0;
+          const outP = parseFloat(m._els.outInput.value) || 0;
+          const total = (tokens / 1e6) * inP + (outputTokens / 1e6) * outP;
+          rows.push([
+            m.name,
+            m.provider,
+            tokens,
+            outputTokens,
+            inP,
+            outP,
+            total.toFixed(6),
+          ]);
+        });
+        const csv = rows.map((r) => r.join(',')).join('\n');
+        const ok = await copyText(csv);
+        const btn = $('copyCsv');
+        const prev = btn.textContent;
+        btn.textContent = ok ? '✓ Copied' : '✗ Failed';
+        btn.classList.toggle('done', ok);
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove('done');
+        }, 1400);
+      });
+
+      // ---- Init ----
+      buildTable();
+      inputEl.value = SAMPLE;
+      (async () => {
+        try {
+          await Promise.all(NEEDED.map(getEnc));
+        } catch (e) {
+          tableStatus.textContent = 'Failed to load tokenizer (offline?)';
+          return;
+        }
+        recount();
+      })();
+    </script>
+  </body>
+</html>
