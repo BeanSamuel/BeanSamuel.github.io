@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d10" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+
+    <title>Tools — Samuel Chao</title>
+    <meta name="author" content="Samuel Chao" />
+    <meta
+      name="description"
+      content="A collection of small, fast, client-side tools for engineers — NLP, competitive programming, and general dev utilities by Samuel Chao."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://beansamuel.github.io/tools/" />
+    <meta property="og:title" content="Tools — Samuel Chao" />
+    <meta
+      property="og:description"
+      content="A collection of small, fast, client-side tools for engineers — NLP, competitive programming, and general dev utilities."
+    />
+    <meta property="og:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Tools — Samuel Chao" />
+    <meta
+      name="twitter:description"
+      content="Small, fast, client-side tools for engineers — NLP, competitive programming, and dev utilities."
+    />
+    <meta name="twitter:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <!-- Same type stack as the main site. Loaded via CDN with a full system
+         fallback, so the page still renders cleanly offline / from file://. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+
+    <style>
+      :root {
+        --bg-color: #0b0d10;
+        --panel-bg: #12151a;
+        --panel-raised: #171b21;
+        --text-main: #d2d6dd;
+        --text-dim: #8a919e;
+        --accent-primary: #57c9d6;
+        --accent-soft: rgba(87, 201, 214, 0.1);
+        --border-color: #232830;
+        --border-strong: #333a45;
+        --font-cjk: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, var(--font-cjk);
+        --font-sans: 'IBM Plex Sans', system-ui, -apple-system, var(--font-cjk);
+        --ease: 180ms ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.65;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
+
+      a {
+        color: var(--accent-primary);
+        text-decoration: none;
+        transition: color var(--ease);
+      }
+      a:hover {
+        color: #9fe4ed;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      .container {
+        max-width: 940px;
+        margin: 0 auto;
+        padding: 2.5rem 2rem 4rem;
+        width: 100%;
+      }
+
+      /* ---- Header ---- */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--text-dim);
+      }
+      .back-link:hover {
+        color: var(--accent-primary);
+      }
+
+      header.hero {
+        margin-top: 1.75rem;
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-primary);
+        margin-bottom: 0.75rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #eef0f4;
+        line-height: 1.2;
+      }
+
+      /* ---- Filter chips ---- */
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 2.25rem 0 1.75rem;
+      }
+
+      .chip {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: border-color var(--ease), background-color var(--ease),
+          color var(--ease);
+      }
+      .chip:hover {
+        border-color: var(--accent-primary);
+        color: var(--text-main);
+      }
+      .chip[aria-pressed='true'] {
+        color: var(--bg-color);
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        font-weight: 500;
+      }
+
+      /* ---- Grid ---- */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.35rem 1.35rem 1.25rem;
+        min-height: 168px;
+        transition: border-color var(--ease), background-color var(--ease),
+          transform var(--ease);
+      }
+
+      /* Live cards are anchors */
+      a.card:hover {
+        border-color: var(--accent-primary);
+        background: var(--panel-raised);
+        transform: translateY(-3px);
+      }
+
+      a.card:hover .card-title {
+        color: var(--accent-primary);
+      }
+
+      /* Soon cards are dimmed + non-interactive */
+      .card.is-soon {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .card-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #eef0f4;
+        line-height: 1.35;
+        transition: color var(--ease);
+      }
+
+      .badge {
+        flex-shrink: 0;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+      .badge.live {
+        color: #27c93f;
+        background: rgba(39, 201, 63, 0.1);
+        border: 1px solid rgba(39, 201, 63, 0.25);
+      }
+      .badge.soon {
+        color: var(--text-dim);
+        background: rgba(138, 145, 158, 0.08);
+        border: 1px solid var(--border-strong);
+      }
+
+      .card-desc {
+        color: var(--text-dim);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        flex-grow: 1;
+      }
+
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+        border: 1px solid var(--border-color);
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+      }
+      .card.is-soon .tag {
+        color: var(--text-dim);
+        background: rgba(138, 145, 158, 0.06);
+      }
+
+      .empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding: 2rem;
+      }
+
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.75rem 1.25rem 3rem;
+        }
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+        a.card:hover {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="back-link" href="../">&larr; Samuel Chao</a>
+
+      <header class="hero">
+        <div class="eyebrow">Tools</div>
+        <h1>Engineering Tools</h1>
+      </header>
+
+      <nav class="filters" id="filters" aria-label="Filter tools by tag"></nav>
+
+      <main class="grid" id="grid"></main>
+
+      <footer>
+        <span>Built by Samuel Chao — all client-side.</span>
+        <span>beansamuel.github.io</span>
+      </footer>
+    </div>
+
+    <script>
+      // ---- Data: add a tool by appending one object here. Nothing else. ----
+      const tools = [
+        {
+          title: 'PDF Workspace',
+          description:
+            'Merge, split, reorder, rotate and delete PDF pages, plus image-to-PDF — all in one grid. Files never leave your browser.',
+          href: './pdf/',
+          tags: ['Dev'],
+          status: 'live',
+        },
+        {
+          title: 'Tokenizer Visualizer',
+          description:
+            'See how text splits into tokens across GPT/BERT tokenizers, with live counts.',
+          href: './tokenizer/',
+          tags: ['NLP'],
+          status: 'live',
+        },
+        {
+          title: 'LLM Token Counter & Cost Estimator',
+          description: 'Estimate token usage and API cost across models.',
+          href: './token-cost/',
+          tags: ['NLP'],
+          status: 'live',
+        },
+        {
+          title: 'Will It TLE?',
+          description:
+            "Check whether your algorithm's complexity fits the time limit.",
+          href: '#',
+          tags: ['Competitive Programming'],
+          status: 'soon',
+        },
+        {
+          title: 'Big-O Complexity Reference',
+          description:
+            'Interactive time/space complexity table for common algorithms.',
+          href: '#',
+          tags: ['Competitive Programming'],
+          status: 'soon',
+        },
+        {
+          title: 'Regex Tester',
+          description:
+            'Test and explain regular expressions with live match highlighting.',
+          href: '#',
+          tags: ['Dev'],
+          status: 'soon',
+        },
+        {
+          title: 'JSON Formatter',
+          description: 'Format, validate, and inspect JSON.',
+          href: '#',
+          tags: ['Dev'],
+          status: 'soon',
+        },
+      ];
+
+      const grid = document.getElementById('grid');
+      const filters = document.getElementById('filters');
+      let activeTag = 'All';
+
+      // Unique tags in first-seen order, prefixed with "All".
+      const allTags = [
+        'All',
+        ...tools.reduce((acc, t) => {
+          t.tags.forEach((tag) => acc.includes(tag) || acc.push(tag));
+          return acc;
+        }, []),
+      ];
+
+      function createCard(tool) {
+        const isLive = tool.status === 'live';
+        // Live -> real anchor; soon -> inert div (never clickable).
+        const el = document.createElement(isLive ? 'a' : 'div');
+        el.className = 'card' + (isLive ? '' : ' is-soon');
+        if (isLive) {
+          el.href = tool.href;
+        } else {
+          el.setAttribute('aria-disabled', 'true');
+        }
+
+        const badge = isLive
+          ? '<span class="badge live">Live</span>'
+          : '<span class="badge soon">Coming soon</span>';
+
+        const tagsHtml = tool.tags
+          .map((tag) => `<span class="tag">${tag}</span>`)
+          .join('');
+
+        el.innerHTML =
+          '<div class="card-head">' +
+          `<span class="card-title">${tool.title}</span>` +
+          badge +
+          '</div>' +
+          `<p class="card-desc">${tool.description}</p>` +
+          `<div class="card-tags">${tagsHtml}</div>`;
+        return el;
+      }
+
+      function render() {
+        grid.innerHTML = '';
+        const visible = tools.filter(
+          (t) => activeTag === 'All' || t.tags.includes(activeTag)
+        );
+
+        if (visible.length === 0) {
+          const empty = document.createElement('p');
+          empty.className = 'empty';
+          empty.textContent = 'No tools in this category yet.';
+          grid.appendChild(empty);
+          return;
+        }
+        visible.forEach((t) => grid.appendChild(createCard(t)));
+      }
+
+      function renderFilters() {
+        allTags.forEach((tag) => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'chip';
+          chip.textContent = tag;
+          chip.setAttribute('aria-pressed', String(tag === activeTag));
+          chip.addEventListener('click', () => {
+            activeTag = tag;
+            filters
+              .querySelectorAll('.chip')
+              .forEach((c) =>
+                c.setAttribute(
+                  'aria-pressed',
+                  String(c.textContent === activeTag)
+                )
+              );
+            render();
+          });
+          filters.appendChild(chip);
+        });
+      }
+
+      renderFilters();
+      render();
+    </script>
+  </body>
+</html>
