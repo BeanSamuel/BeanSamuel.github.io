@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d10" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+
+    <title>Tokenizer Visualizer — Samuel Chao</title>
+    <meta name="author" content="Samuel Chao" />
+    <meta
+      name="description"
+      content="See how text splits into tokens across OpenAI tokenizers (o200k / cl100k / p50k), with exact boundaries, token IDs, and live counts. 100% client-side."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://beansamuel.github.io/tools/tokenizer/" />
+    <meta property="og:title" content="Tokenizer Visualizer — Samuel Chao" />
+    <meta
+      property="og:description"
+      content="See how text splits into tokens across OpenAI tokenizers, with exact boundaries, token IDs, and live counts."
+    />
+    <meta property="og:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Tokenizer Visualizer — Samuel Chao" />
+    <meta
+      name="twitter:description"
+      content="See how text splits into tokens across OpenAI tokenizers, with exact boundaries and live counts."
+    />
+    <meta name="twitter:image" content="https://beansamuel.github.io/avatar.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+
+    <style>
+      :root {
+        --bg-color: #0b0d10;
+        --panel-bg: #12151a;
+        --panel-raised: #171b21;
+        --text-main: #d2d6dd;
+        --text-dim: #8a919e;
+        --text-faint: #5c636e;
+        --accent-primary: #57c9d6;
+        --accent-soft: rgba(87, 201, 214, 0.1);
+        --border-color: #232830;
+        --border-strong: #333a45;
+        --good: #27c93f;
+        --warn: #e0a458;
+        --font-cjk: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+          Consolas, var(--font-cjk);
+        --font-sans: 'IBM Plex Sans', system-ui, -apple-system, var(--font-cjk);
+        --ease: 180ms ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
+
+      a {
+        color: var(--accent-primary);
+        text-decoration: none;
+        transition: color var(--ease);
+      }
+      a:hover {
+        color: #9fe4ed;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2.25rem 1.5rem 4rem;
+        width: 100%;
+      }
+
+      /* ---- Header ---- */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .back-link:hover {
+        color: var(--accent-primary);
+      }
+
+      header.hero {
+        margin-top: 1.5rem;
+        margin-bottom: 1.75rem;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-primary);
+        margin-bottom: 0.6rem;
+      }
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #eef0f4;
+        line-height: 1.2;
+      }
+      .sub {
+        color: var(--text-dim);
+        margin-top: 0.5rem;
+        max-width: 62ch;
+        font-size: 0.98rem;
+      }
+
+      /* ---- Control bar ---- */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        align-items: flex-end;
+        margin-bottom: 1rem;
+      }
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .control-label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+      .segmented {
+        display: inline-flex;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 3px;
+        gap: 2px;
+      }
+      .segmented button {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        background: transparent;
+        border: 0;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: color var(--ease), background-color var(--ease);
+        white-space: nowrap;
+      }
+      .segmented button:hover {
+        color: var(--text-main);
+      }
+      .segmented button[aria-pressed='true'] {
+        color: var(--bg-color);
+        background: var(--accent-primary);
+        font-weight: 500;
+      }
+      .models-note {
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--text-dim);
+        min-height: 1.1em;
+      }
+      .models-note b {
+        color: var(--text-main);
+        font-weight: 500;
+      }
+
+      /* ---- Textarea ---- */
+      textarea {
+        width: 100%;
+        min-height: 150px;
+        resize: vertical;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem 1.1rem;
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        transition: border-color var(--ease);
+        tab-size: 4;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+      }
+      textarea::placeholder {
+        color: var(--text-faint);
+      }
+
+      /* ---- Stats bar ---- */
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 1rem 0 1.25rem;
+      }
+      .stat {
+        display: flex;
+        flex-direction: column;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.55rem 0.9rem;
+        min-width: 84px;
+      }
+      .stat .num {
+        font-family: var(--font-mono);
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: #eef0f4;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+      }
+      .stat.tokens .num {
+        color: var(--accent-primary);
+      }
+      .stat .lbl {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin-top: 2px;
+      }
+      .stats-spacer {
+        flex: 1 1 auto;
+      }
+      .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--text-dim);
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        border-radius: 6px;
+        padding: 0.5rem 0.8rem;
+        cursor: pointer;
+        transition: border-color var(--ease), color var(--ease),
+          background-color var(--ease);
+        white-space: nowrap;
+      }
+      .copy-btn:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+      }
+      .copy-btn.done {
+        color: var(--good);
+        border-color: var(--good);
+        background: rgba(39, 201, 63, 0.08);
+      }
+
+      /* ---- Output panel ---- */
+      .panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .panel-head .title {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-dim);
+      }
+      .view-toggle {
+        display: inline-flex;
+        gap: 2px;
+        background: var(--bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 2px;
+      }
+      .view-toggle button {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--text-dim);
+        background: transparent;
+        border: 0;
+        padding: 0.28rem 0.7rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .view-toggle button[aria-pressed='true'] {
+        color: var(--bg-color);
+        background: var(--accent-primary);
+        font-weight: 500;
+      }
+
+      #output {
+        padding: 1.15rem 1.15rem 1.35rem;
+        font-family: var(--font-mono);
+        font-size: 0.95rem;
+        line-height: 2;
+        min-height: 96px;
+      }
+      /* Text view: preserve whitespace/newlines and flow inline. */
+      #output.view-text {
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      /* IDs view: token id chips wrapping in a flex grid. */
+      #output.view-ids {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        line-height: 1.5;
+      }
+
+      .tok {
+        border-radius: 3px;
+        padding: 1px 0;
+        cursor: default;
+        transition: box-shadow 120ms ease, filter 120ms ease;
+      }
+      #output.view-ids .tok {
+        padding: 2px 7px;
+        font-size: 0.8rem;
+        color: var(--text-main);
+      }
+      .tok:hover {
+        filter: brightness(1.45);
+        box-shadow: 0 0 0 1px var(--accent-primary);
+      }
+      /* Visible-whitespace glyphs */
+      .ws {
+        color: var(--text-faint);
+      }
+      .tok.empty {
+        color: var(--text-faint);
+        opacity: 0.7;
+      }
+
+      .render-note {
+        margin-top: 0.75rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--warn);
+        display: none;
+      }
+      .render-note.show {
+        display: block;
+      }
+      .status {
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--text-dim);
+      }
+
+      /* ---- Tooltip ---- */
+      #tooltip {
+        position: fixed;
+        z-index: 50;
+        pointer-events: none;
+        background: #05070a;
+        border: 1px solid var(--border-strong);
+        border-radius: 6px;
+        padding: 0.5rem 0.65rem;
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        line-height: 1.5;
+        color: var(--text-main);
+        max-width: 320px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 100ms ease;
+        white-space: normal;
+        word-break: break-word;
+      }
+      #tooltip.show {
+        opacity: 1;
+      }
+      #tooltip .row {
+        display: flex;
+        gap: 0.5rem;
+      }
+      #tooltip .k {
+        color: var(--text-faint);
+      }
+      #tooltip .id {
+        color: var(--accent-primary);
+      }
+      #tooltip .raw {
+        color: #eef0f4;
+        margin-top: 3px;
+        display: block;
+      }
+
+      /* ---- Explainer ---- */
+      details.explainer {
+        margin-top: 1.75rem;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 0.25rem 1.1rem;
+      }
+      details.explainer summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 0.75rem 0;
+        font-weight: 500;
+        color: #eef0f4;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      details.explainer summary::-webkit-details-marker {
+        display: none;
+      }
+      details.explainer summary::before {
+        content: '＋';
+        font-family: var(--font-mono);
+        color: var(--accent-primary);
+      }
+      details.explainer[open] summary::before {
+        content: '－';
+      }
+      details.explainer .body {
+        padding: 0 0 1rem;
+        color: var(--text-dim);
+        font-size: 0.9rem;
+        max-width: 68ch;
+      }
+      details.explainer .body p {
+        margin-bottom: 0.7rem;
+      }
+      details.explainer code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1rem;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1.5rem 1.1rem 3rem;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .stat {
+          min-width: 72px;
+          padding: 0.5rem 0.7rem;
+        }
+        .stats-spacer {
+          flex-basis: 100%;
+          height: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="back-link" href="../">&larr; Tools</a>
+
+      <header class="hero">
+        <div class="eyebrow">NLP · Tokenizer</div>
+        <h1>Tokenizer Visualizer</h1>
+        <p class="sub">
+          See exactly how text splits into tokens across the OpenAI tokenizer
+          families. Boundaries are reconstructed from the real tokenizer output —
+          no guessing, no regex. Everything runs in your browser.
+        </p>
+      </header>
+
+      <div class="controls">
+        <div class="control-group">
+          <span class="control-label">Encoding</span>
+          <div class="segmented" id="encSelect" role="group" aria-label="Tokenizer encoding"></div>
+        </div>
+        <div class="control-group" style="flex: 1 1 240px; min-width: 200px">
+          <span class="control-label">Maps to</span>
+          <span class="models-note" id="modelsNote"></span>
+        </div>
+      </div>
+
+      <label for="input" class="control-label" style="display: block; margin-bottom: 0.4rem"
+        >Input text</label
+      >
+      <textarea id="input" spellcheck="false" placeholder="Type or paste text…"></textarea>
+
+      <div class="stats" id="stats">
+        <div class="stat tokens"><span class="num" id="stTokens">0</span><span class="lbl">Tokens</span></div>
+        <div class="stat"><span class="num" id="stChars">0</span><span class="lbl">Chars</span></div>
+        <div class="stat"><span class="num" id="stWords">0</span><span class="lbl">Words</span></div>
+        <div class="stat"><span class="num" id="stBytes">0</span><span class="lbl">Bytes</span></div>
+        <span class="stats-spacer"></span>
+        <button class="copy-btn" id="copyIds" type="button">⧉ Copy IDs</button>
+        <button class="copy-btn" id="copyCount" type="button">⧉ Copy count</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="title" id="panelStatus">Token segmentation</span>
+          <div class="view-toggle" id="viewToggle" role="group" aria-label="View mode">
+            <button type="button" data-view="text" aria-pressed="true">Text</button>
+            <button type="button" data-view="ids" aria-pressed="false">IDs</button>
+          </div>
+        </div>
+        <div id="output" class="view-text" aria-live="polite"></div>
+      </div>
+      <p class="render-note" id="renderNote"></p>
+
+      <details class="explainer">
+        <summary>What is a token?</summary>
+        <div class="body">
+          <p>
+            Language models don't read characters or words — they read
+            <b>tokens</b>: chunks of bytes learned by a compression algorithm
+            (Byte-Pair Encoding). A token is often a whole common word, a word
+            with its leading space (<code>&nbsp;the</code>), a subword fragment,
+            a punctuation mark, or even a single byte of a multi-byte character
+            like an emoji.
+          </p>
+          <p>
+            Each token maps to one integer <b>ID</b>. Model context windows, API
+            pricing, and rate limits are all counted in tokens — not words — so
+            the same sentence can cost differently across encodings. As a rough
+            English rule of thumb, 1 token ≈ 4 characters ≈ 0.75 words, but code,
+            other languages, and emoji break that ratio.
+          </p>
+          <p>
+            The colored chunks above are the <b>exact</b> tokenizer output: the
+            text is encoded to IDs, then each ID is decoded back individually to
+            recover its precise substring — including leading spaces. A dimmed
+            chunk (<span class="ws">□</span>) is a token holding only partial
+            bytes of a multi-byte character; the character shows up on the token
+            that completes it.
+          </p>
+        </div>
+      </details>
+
+      <footer>
+        <span>Tokenizers via gpt-tokenizer (pure JS) · loaded once, then cached offline.</span>
+        <span><a href="../../">beansamuel.github.io</a></span>
+      </footer>
+    </div>
+
+    <div id="tooltip" role="tooltip"></div>
+
+    <script type="module">
+      const CDN = 'https://esm.sh/gpt-tokenizer@3.4.0/encoding/';
+
+      // Add an encoding by appending ONE entry here — the selector, lazy-load
+      // and models note are all derived from this object. The only rule: the
+      // key must be a real gpt-tokenizer encoding module name (it becomes the
+      // CDN subpath), e.g. r50k_base, p50k_edit, o200k_harmony.
+      const ENCODINGS = {
+        o200k_base: { models: 'GPT-4o · GPT-4.1 · o-series' },
+        cl100k_base: { models: 'GPT-4 · GPT-3.5-turbo · text-embedding-3' },
+        p50k_base: { models: 'Codex · text-davinci-00x' },
+      };
+
+      // Translucent tints, distinct enough that adjacent tokens separate cleanly
+      // on the dark base. Cycled by token index.
+      const PALETTE = [
+        'rgba(87,201,214,0.20)',
+        'rgba(199,107,134,0.22)',
+        'rgba(127,176,105,0.20)',
+        'rgba(224,164,88,0.20)',
+        'rgba(155,140,206,0.24)',
+        'rgba(111,179,189,0.20)',
+        'rgba(217,136,128,0.22)',
+        'rgba(130,177,255,0.20)',
+      ];
+
+      // Rendering more than this many token spans hurts nothing statistically but
+      // bloats the DOM; stats/copy still cover the full input.
+      const MAX_RENDER = 6000;
+
+      const SAMPLE = `Tokenization is the first step in every NLP pipeline: text is split into subword tokens, then mapped to integer IDs.
+
+def edit_distance(a, b):
+    dp = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
+    # ... classic O(n*m) DP ...
+    return dp[-1][-1]
+
+中文與 English 混排也能正確切分 — even emoji like 🚀 tokenize byte-by-byte!`;
+
+      const $ = (id) => document.getElementById(id);
+      const encSelectEl = $('encSelect');
+      const modelsNoteEl = $('modelsNote');
+      const inputEl = $('input');
+      const outputEl = $('output');
+      const tooltipEl = $('tooltip');
+      const renderNoteEl = $('renderNote');
+      const panelStatusEl = $('panelStatus');
+
+      const modCache = {};
+      let current = 'o200k_base';
+      let view = 'text';
+      let seq = 0; // guards against stale async renders when switching fast
+
+      // Full-input results (for stats + copy)
+      let lastIds = [];
+      // Rendered slice (for the visual + tooltips)
+      let renderIds = [];
+      let renderStrings = [];
+
+      function escapeHtml(s) {
+        return s
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      async function getEnc(name) {
+        if (modCache[name]) return modCache[name];
+        panelStatusEl.textContent = `Loading ${name}…`;
+        const mod = await import(/* @vite-ignore */ CDN + name);
+        modCache[name] = mod;
+        return mod;
+      }
+
+      // ---- Encoding selector ----
+      function buildEncoder() {
+        Object.keys(ENCODINGS).forEach((name) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = name;
+          b.setAttribute('aria-pressed', String(name === current));
+          b.addEventListener('click', () => {
+            if (name === current) return;
+            current = name;
+            encSelectEl
+              .querySelectorAll('button')
+              .forEach((x) =>
+                x.setAttribute('aria-pressed', String(x.textContent === current))
+              );
+            modelsNoteEl.innerHTML = `<b>${ENCODINGS[current].models}</b>`;
+            tokenize();
+          });
+          encSelectEl.appendChild(b);
+        });
+        modelsNoteEl.innerHTML = `<b>${ENCODINGS[current].models}</b>`;
+      }
+
+      // ---- View toggle ----
+      $('viewToggle')
+        .querySelectorAll('button')
+        .forEach((b) => {
+          b.addEventListener('click', () => {
+            if (b.dataset.view === view) return;
+            view = b.dataset.view;
+            $('viewToggle')
+              .querySelectorAll('button')
+              .forEach((x) =>
+                x.setAttribute('aria-pressed', String(x.dataset.view === view))
+              );
+            outputEl.className = view === 'ids' ? 'view-ids' : 'view-text';
+            renderTokens();
+          });
+        });
+
+      // ---- Stats ----
+      const fmt = (n) => n.toLocaleString('en-US');
+      const byteLen = (s) => new TextEncoder().encode(s).length;
+      function updateStats(text, ids) {
+        $('stTokens').textContent = fmt(ids.length);
+        $('stChars').textContent = fmt([...text].length);
+        $('stWords').textContent = fmt(
+          text.trim() ? text.trim().split(/\s+/).length : 0
+        );
+        $('stBytes').textContent = fmt(byteLen(text));
+      }
+
+      // ---- Visible whitespace ----
+      function visibleHtml(s) {
+        let out = '';
+        for (const ch of s) {
+          if (ch === ' ') out += '<span class="ws">·</span>';
+          else if (ch === '\n') out += '<span class="ws">↵</span>\n';
+          else if (ch === '\t') out += '<span class="ws">→\t</span>';
+          else if (ch === '\r') out += '';
+          else out += escapeHtml(ch);
+        }
+        return out;
+      }
+
+      // ---- Render the token segmentation ----
+      function renderTokens() {
+        if (renderIds.length === 0) {
+          outputEl.innerHTML =
+            '<span style="color:var(--text-faint)">— no tokens —</span>';
+          return;
+        }
+        const parts = new Array(renderIds.length);
+        for (let i = 0; i < renderIds.length; i++) {
+          const id = renderIds[i];
+          const raw = renderStrings[i];
+          const bg = PALETTE[i % PALETTE.length];
+          const empty = raw.length === 0;
+          const inner =
+            view === 'ids'
+              ? String(id)
+              : empty
+                ? '<span class="ws">□</span>'
+                : visibleHtml(raw);
+          parts[i] =
+            `<span class="tok${empty && view === 'text' ? ' empty' : ''}"` +
+            ` style="background:${bg}" data-i="${i}" data-id="${id}">${inner}</span>`;
+        }
+        outputEl.innerHTML = parts.join('');
+      }
+
+      // ---- Main tokenize path (debounced) ----
+      async function tokenize() {
+        const mySeq = ++seq;
+        const text = inputEl.value;
+        let mod;
+        try {
+          mod = await getEnc(current);
+        } catch (e) {
+          panelStatusEl.textContent = 'Failed to load tokenizer (offline?)';
+          return;
+        }
+        if (mySeq !== seq) return; // superseded by a newer call
+
+        const ids = mod.encode(text);
+        lastIds = ids;
+        updateStats(text, ids);
+
+        const n = Math.min(ids.length, MAX_RENDER);
+        renderIds = ids.slice(0, n);
+        // Correctness: decode each token id on its own to recover its exact
+        // substring (leading space included; '' for partial multi-byte tokens).
+        renderStrings = renderIds.map((id) => mod.decode([id]));
+        renderTokens();
+
+        panelStatusEl.textContent = 'Token segmentation';
+        if (ids.length > MAX_RENDER) {
+          renderNoteEl.textContent = `Large input: showing the first ${fmt(
+            MAX_RENDER
+          )} of ${fmt(ids.length)} tokens. Counts above cover the full text.`;
+          renderNoteEl.classList.add('show');
+        } else {
+          renderNoteEl.classList.remove('show');
+        }
+      }
+
+      let debounceTimer = null;
+      inputEl.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(tokenize, 150);
+      });
+
+      // ---- Tooltip (event-delegated) ----
+      function tokenTooltip(el) {
+        const i = +el.dataset.i;
+        const id = el.dataset.id;
+        const raw = renderStrings[i] ?? '';
+        const rawLabel = raw.length === 0 ? '∅ partial bytes' : JSON.stringify(raw);
+        tooltipEl.innerHTML =
+          `<div class="row"><span class="k">index</span><span>#${i}</span></div>` +
+          `<div class="row"><span class="k">id</span><span class="id">${id}</span></div>` +
+          `<span class="raw">${escapeHtml(rawLabel)}</span>`;
+        tooltipEl.classList.add('show');
+      }
+      function moveTooltip(e) {
+        const pad = 14;
+        const w = tooltipEl.offsetWidth;
+        const h = tooltipEl.offsetHeight;
+        let x = e.clientX + pad;
+        let y = e.clientY + pad;
+        if (x + w > window.innerWidth - 8) x = e.clientX - w - pad;
+        if (y + h > window.innerHeight - 8) y = e.clientY - h - pad;
+        tooltipEl.style.left = Math.max(6, x) + 'px';
+        tooltipEl.style.top = Math.max(6, y) + 'px';
+      }
+      outputEl.addEventListener('mouseover', (e) => {
+        const t = e.target.closest('.tok');
+        if (t) {
+          tokenTooltip(t);
+          moveTooltip(e);
+        }
+      });
+      outputEl.addEventListener('mousemove', (e) => {
+        if (tooltipEl.classList.contains('show')) moveTooltip(e);
+      });
+      outputEl.addEventListener('mouseout', (e) => {
+        if (!e.relatedTarget || !e.relatedTarget.closest('.tok'))
+          tooltipEl.classList.remove('show');
+      });
+      // Touch: tap a token to show its details briefly.
+      outputEl.addEventListener(
+        'touchstart',
+        (e) => {
+          const t = e.target.closest('.tok');
+          if (!t) return;
+          const touch = e.touches[0];
+          tokenTooltip(t);
+          moveTooltip({ clientX: touch.clientX, clientY: touch.clientY });
+        },
+        { passive: true }
+      );
+
+      // ---- Copy helpers ----
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {
+          // Fallback for file:// / insecure contexts.
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            return ok;
+          } catch (__) {
+            return false;
+          }
+        }
+      }
+      function flash(btn, label, ok = true) {
+        const prev = btn.textContent;
+        btn.textContent = ok ? `✓ ${label}` : '✗ Failed';
+        btn.classList.toggle('done', ok);
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove('done');
+        }, 1400);
+      }
+      $('copyIds').addEventListener('click', async () => {
+        const ok = await copyText('[' + lastIds.join(', ') + ']');
+        flash($('copyIds'), 'Copied', ok);
+      });
+      $('copyCount').addEventListener('click', async () => {
+        const ok = await copyText(String(lastIds.length));
+        flash($('copyCount'), 'Copied', ok);
+      });
+
+      // ---- Init ----
+      buildEncoder();
+      inputEl.value = SAMPLE;
+      tokenize();
+    </script>
+  </body>
+</html>
